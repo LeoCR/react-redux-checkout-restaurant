@@ -1,41 +1,935 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="theme-color" content="#000000" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title> Restaurant</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+  <!-- google font -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Amatic+SC:400,700|Lilita+One" rel="stylesheet">
+  <!-- bootstrap -->
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+  <!-- font awesome -->
+  <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
+  <!-- flaticon -->
+  <link rel="stylesheet" type="text/css" href="/css/flaticon.css" />
+  <!-- revolution slider -->
+  <link rel="stylesheet" type="text/css" href="/revolution/css/settings.css">
+  <link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css">
+  <!-- mega menu -->
+  <link rel="stylesheet" type="text/css" href="/css/mega-menu/mega_menu.css" />
+  <!-- carousel -->
+  <link rel="stylesheet" type="text/css" href="/css/owl.carousel.css" />
+  
+  <!-- Style customizer -->
+  <link rel="stylesheet" type="text/css" href="#" data-style="styles" />
+  <link rel="stylesheet" type="text/css" href="/css/style-customizer.css" />
+  <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+  <!-- main style -->
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <!-- responsive -->
+  <link rel="stylesheet" type="text/css" href="/css/responsive.css" />
+</head>
+<body>
+    <div id="loading">
+      <div id="loading-center">
+            <img src="/images/loader.gif" alt="">
+      </div>
+    </div>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <!--=================================
+    loading -->
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <!--=================================
+    header -->
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    <header id="header" class="header-3">
+      <!-- mega menu -->
+      <div class="menu">
+        <!-- menu start -->
+          <nav id="menu-1" class="mega-menu">
+            <!-- menu list items container -->
+            <section class="menu-list-items">
+              <div class="container">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 center-menu">
+                      <!-- menu logo -->
+                      <ul class="menu-logo">
+                        <li class="head-info">
+                          <a href="index.html"><img id="logo_dark_img" src="/images/logo-dark.png" alt="logo"> </a>
+                          <div class="head-info-content">
+                            <div class="info-left pull-left">
+                              <div class="time">
+                                <h6>MON – SAT</h6>
+                                <p>Lunch: 11:30 – 2:00</p>
+                                <p>Evening: 6:30 – 10:00</p>
+                              </div>
+                              <div class="time mt-20">
+                                <h6>SUNDAY</h6>
+                                <p>Lunch: 11:30 – 2:00</p>
+                                <p>Evening: 6:30 – 10:00</p>
+                              </div>
+                            </div>
+                            <div class="info-right pull-right">
+                              <div class="address">
+                                <p>1234 North Avenue Luke, IN 360001 </p>
+                                <p> (01) 123 456 7890 </p>
+                                <p>support@website.com </p>
+                                <a href="#"><i class="fa fa-map-o pr-10"></i>  Find us here</a>
+                                <ul class="list-inline mt-15">
+                                  <li><a href="#"> <i class="fa fa-facebook"></i> </a> </li>
+                                  <li><a href="#"> <i class="fa fa-twitter"></i> </a> </li>
+                                  <li><a href="#"> <i class="fa fa-google-plus"></i> </a> </li>
+                                  <li><a href="#"> <i class="fa fa-instagram"></i> </a> </li>
+                                  <li><a href="#"> <i class="fa fa-tripadvisor"></i> </a> </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                      <!-- menu links -->
+                      <ul class="menu-links">
+                        <!-- active class -->
+                        <li>
+                          <a class="nav-link active" href="#home"> Home</a>
+                        </li>
+                        <li>
+                          <a href="#about-us" class="nav-link"> About Us </a>
+                        </li>
+                        <li>
+                          <a  href="#services" class="nav-link">Services</a>
+                        </li>
+                        <li>
+                          <a href="/#menu" class="nav-link">Menu</a>
+                        </li>
+                        <li>
+                          <a href="#reservation" class="nav-link"> Reservation </a>
+                        </li>               
+                        <li>
+                          <a href="#contact-us" class="nav-link"> Contact us</a>
+                        </li>
+                        <li id="basket-shopping-cart">
+                            
+                        </li>
+              </ul>
+          </div>
+          </div>
+        </div>
+      </section>
+      </nav>
+      <!-- menu end -->
+    </div>
+    </header>
+
+    <!--=================================
+    header -->
+
+    <!--=================================
+    slider -->
+    <section id="checkout-section">
+        <div id="checkout"></div>
+      </section>
+    <!--=================================
+    slider -->
+
+    <!--=================================
+    About -->
+    <section class="about-2 white-bg page-section-ptb" id="about-us">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <h2><span class="text-orange">About </span> Us:</h2>
+            <p>We offer a highly seasonal and continuously sensory tasting menu experience.</p>
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+              praesentium voluptatum deleniti lorem Lorem ipsum dolor oluptas molestias, illum ratione consequuntur nam, quo, accusamus deleniti <a class="text-orange" href="#">dolores</a> et quas,</p>
+              <p>Corporis, voluptas? atque corrupti quos amet doloribus recusandae. Porro, eum, excepturi. <a class="text-orange" href="#"> Porro</a> nam, quo, accusamus deleniti</p>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="feature-box left-icon mt-40">
+                    <div class="icon">
+                      <i class="flaticon-kitchen text-orange"></i>
+                    </div>
+                    <div class="info">
+                      <h4 class="title">The Dining Room</h4>
+                      <p>We have Dining Room sit amet consectetuer elit.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="feature-box left-icon mt-40">
+                    <div class="icon">
+                      <i class="flaticon-food-16 text-orange"></i>
+                    </div>
+                    <div class="info">
+                      <h4 class="title">The Library</h4>
+                      <p>Library of the sit amet, consectetuer adipiscing elit.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <img class="img-responsive center-block" src="/images/object/10.jpg" alt="">
+            </div>
+        </div>
+    </div>
+    </section>
+    <!--=================================
+    About -->
+
+    <!--=================================
+    our-menu -->
+    
+    <section class="service-feature white-bg page-section-ptb" id="services">
+    <div class="object-top-bottom">
+        <div class="object-left">
+          <img class="img-responsive" src="/images/object/11.png" alt="">
+        </div>
+        <div class="object-right">
+          <img class="img-responsive" src="/images/object/04.png" alt="">
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+          <div class="section-title text-center">
+            <div class="title-separator">
+                <i class="glyph-icon flaticon-food-27"></i>
+            </div>
+            <h2> <span class="text-orange">Our</span> Services</h2>
+            <p>This is what we do and we do it perfectly</p>
+          </div>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-6 mb-30">
+            <div class="service active text-center">
+              <div class="service-content">
+              <i class="glyph-icon flaticon-cake-box"></i>
+              <h4>birthday party</h4>
+              <p>There are many variations of passages of Lorem Ipsum available majority have suffered.</p>
+              </div>
+              <div class="service-img" style="background-image: url('images/feature/01.jpg');"></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 mb-30">
+            <div class="service text-center">
+              <div class="service-content">
+              <i class="glyph-icon flaticon-bottle"></i>
+              <h4>Private Dining</h4>
+              <p>There are many variations of passages of Lorem Ipsum available majority have suffered.</p>
+              </div>
+              <div class="service-img" style="background-image: url('images/feature/02.jpg');"></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 mb-30">
+            <div class="service text-center">
+              <div class="service-content">
+              <i class="glyph-icon flaticon-kitchen-1"></i>
+              <h4>Charity Events</h4>
+              <p>There are many variations of passages of Lorem Ipsum available majority have suffered.</p>
+              </div>
+              <div class="service-img" style="background-image: url('images/feature/03.jpg');"></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 mb-30">
+            <div class="service text-center">
+              <div class="service-content">
+              <i class="glyph-icon flaticon-chinese-rice-with-two-chopsticks"></i>
+              <h4>Film Shoots</h4>
+              <p>There are many variations of passages of Lorem Ipsum available majority have suffered.</p>
+              </div>
+              <div class="service-img" style="background-image: url('images/feature/04.jpg');"></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 mb-30">
+            <div class="service text-center">
+              <div class="service-content">
+              <i class="glyph-icon flaticon-chinese-rice-with-two-chopsticks"></i>
+              <h4>Film Shoots</h4>
+              <p>There are many variations of passages of Lorem Ipsum available majority have suffered.</p>
+              </div>
+              <div class="service-img" style="background-image: url('images/feature/04.jpg');"></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 mb-30">
+            <div class="service text-center">
+              <div class="service-content">
+              <i class="glyph-icon flaticon-kitchen-1"></i>
+              <h4>Charity Events</h4>
+              <p>There are many variations of passages of Lorem Ipsum available majority have suffered.</p>
+              </div>
+              <div class="service-img" style="background-image: url('images/feature/03.jpg');"></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 mb-30">
+            <div class="service text-center">
+              <div class="service-content">
+              <i class="glyph-icon flaticon-bottle"></i>
+              <h4>Private Dining</h4>
+              <p>There are many variations of passages of Lorem Ipsum available majority have suffered.</p>
+              </div>
+              <div class="service-img" style="background-image: url('images/feature/02.jpg');"></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 mb-30">
+            <div class="service text-center">
+              <div class="service-content">
+              <i class="glyph-icon flaticon-cake-box"></i>
+              <h4>birthday party</h4>
+              <p>There are many variations of passages of Lorem Ipsum available majority have suffered.</p>
+              </div>
+              <div class="service-img" style="background-image: url('images/feature/01.jpg');"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="our-blog gray-bg page-section-ptb">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title text-center">
+              <div class="title-separator">
+                <i class="glyph-icon flaticon-food-27"></i>
+              </div>
+              <h2> <span class="text-orange">Upcoming</span> events</h2>
+              <p>The most happening & popular upcoming Events at The Zayka</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            <div class="owl-carousel" data-items="3" data-md-items="2" data-sm-items="2" data-nav-dots="true" data-space="30">
+              <div class="item">
+                <div class="blog-entry">
+                  <div class="blog-entry-image">
+                    <img class="img-responsive" alt="" src="/images/event/01.jpg">
+                    <div class="entry-date">
+                      27<span>NAV</span>
+                    </div>
+                  </div>
+                  <div class="entry-content">
+                    <div class="entry-title">
+                      <h3><a href="blog-single.html">Try some healthy food</a></h3>
+                    </div>
+                    <div class="entry-meta">
+                      <a href="#"><i class="fa fa-user"></i> By The Zayka</a>
+                      <a href="#"><i class="fa fa-comments-o"></i> 5 Comments</a>
+                    </div>
+                    <div class="entry-description">
+                      <p>Aptent taciti sociosqu ad litora euismod atras vulputate iltricies etri elit class.</p>
+                      <a href="#">Read More <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="blog-entry">
+                  <div class="blog-entry-image">
+                    <img class="img-responsive" alt="" src="/images/event/02.jpg">
+                    <div class="entry-date">
+                      27<span>NAV</span>
+                    </div>
+                  </div>
+                  <div class="entry-content">
+                    <div class="entry-title">
+                      <h3><a href="blog-single.html">Music For Your Soul</a></h3>
+                    </div>
+                    <div class="entry-meta">
+                      <a href="#"><i class="fa fa-user"></i> By The Zayka</a>
+                      <a href="#"><i class="fa fa-comments-o"></i> 5 Comments</a>
+                    </div>
+                    <div class="entry-description">
+                      <p>Iltricies etri elit euismod atras vulputate. Class aptent taciti sociosqu ad litora.</p>
+                      <a href="#">Read More <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="blog-entry">
+                  <div class="blog-entry-image">
+                    <img class="img-responsive" alt="" src="/images/event/03.jpg">
+                    <div class="entry-date">
+                      27<span>NAV</span>
+                    </div>
+                  </div>
+                  <div class="entry-content">
+                    <div class="entry-title">
+                      <h3><a href="blog-single.html">Dealing with Fomo</a></h3>
+                    </div>
+                    <div class="entry-meta">
+                      <a href="#"><i class="fa fa-user"></i> By The Zayka</a>
+                      <a href="#"><i class="fa fa-comments-o"></i> 5 Comments</a>
+                    </div>
+                    <div class="entry-description">
+                      <p>Class aptent taciti sociosqu ad litora euismod atras vulputate iltricies etri elit.</p>
+                      <a href="#">Read More <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="blog-entry">
+                  <div class="blog-entry-image">
+                    <img class="img-responsive" alt="" src="/images/event/04.jpg">
+                    <div class="entry-date">
+                      27<span>NAV</span>
+                    </div>
+                  </div>
+                  <div class="entry-content">
+                    <div class="entry-title">
+                      <h3><a href="blog-single.html">Dealing with Fomo</a></h3>
+                    </div>
+                    <div class="entry-meta">
+                      <a href="#"><i class="fa fa-user"></i> By The Zayka</a>
+                      <a href="#"><i class="fa fa-comments-o"></i> 5 Comments</a>
+                    </div>
+                    <div class="entry-description">
+                      <p>Sociosqu ad litora euismod atras vulputate iltricies etri elit. Class aptent taciti.</p>
+                      <a href="#">Read More <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--=================================
+    our blog -->
+
+    <!--=================================
+    our-team -->
+
+    <section class="our-team white-bg page-section-pt">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title text-center">
+              <div class="title-separator">
+                <i class="glyph-icon flaticon-food-27"></i>
+              </div>
+              <h2> <span class="text-orange">Our</span> Team</h2>
+              <p>List of people who matter in The Zayka</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            <div class="owl-carousel" data-items="3" data-md-items="3" data-sm-items="2">
+              <div class="item">
+                <div class="team">
+                  <div class="team-images">
+                    <img class="img-responsive center-block" src="/images/team/05.png" alt="">
+                  </div>
+                  <div class="team-content">
+                    <div class="team-description">
+                      <h6>Martin Smith</h6>
+                      <span>Sales exclusive</span>
+                    </div>
+                    <div class="team-social">
+                      <ul>
+                        <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
+                        <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
+                        <li><a href="#"> <i class="fa fa-pinterest-p"></i> </a></li>
+                        <li><a href="#"> <i class="fa fa-dribbble"></i> </a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="team">
+                <div class="team-images">
+                  <img class="img-responsive center-block" src="/images/team/06.png" alt="">
+                </div>
+                <div class="team-content">
+                  <div class="team-description">
+                    <h6>Alice Williams</h6>
+                    <span>Head chef</span>
+                  </div>
+                  <div class="team-social">
+                    <ul>
+                      <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-pinterest-p"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-dribbble"></i> </a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="team">
+                <div class="team-images">
+                  <img class="img-responsive center-block" src="/images/team/07.png" alt="">
+                </div>
+                <div class="team-content">
+                  <div class="team-description">
+                    <h6>Paul Flavius</h6>
+                    <span>Cook</span>
+                  </div>
+                  <div class="team-social">
+                    <ul>
+                      <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-pinterest-p"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-dribbble"></i> </a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="team">
+                <div class="team-images">
+                  <img class="img-responsive center-block" src="/images/team/08.png" alt="">
+                </div>
+                <div class="team-content">
+                  <div class="team-description">
+                    <h6>Michael Bean</h6>
+                    <span>Sr. chef</span>
+                  </div>
+                  <div class="team-social">
+                    <ul>
+                      <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-pinterest-p"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-dribbble"></i> </a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="team">
+                <div class="team-images">
+                  <img class="img-responsive center-block" src="/images/team/05.png" alt="">
+                </div>
+                <div class="team-content">
+                  <div class="team-description">
+                    <h6>Felica Queen</h6>
+                    <span>Head waiter</span>
+                  </div>
+                  <div class="team-social">
+                    <ul>
+                      <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-pinterest-p"></i> </a></li>
+                      <li><a href="#"> <i class="fa fa-dribbble"></i> </a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--=================================
+    Team -->
+
+    <!--=================================
+    testimonials -->
+
+    <section class="testimonials parallax bg-overlay-black-90 page-section-ptb" style="background-image: url(images/bg/05.jpg);">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            <div class="section-title text-center">
+              <div class="title-separator">
+                <i class="glyph-icon flaticon-food-27 white"></i>
+              </div>
+              <h2 class="text-white"> <span class="text-orange">Our </span>testimonials</h2>
+              <p class="text-white">What Our Happy Clients say about us</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            <div class="owl-carousel" data-items="2" data-md-items="2" data-sm-items="1" data-nav-dots="true" data-dotcolor="white">
+              <div class="item">
+                <div class="testimonial-block white-text left">
+                  
+                  <div class="testimonial-avatar">
+                    <img src="/images/team/01.jpg" alt="">
+                  </div>
+                  <div class="testimonial-info clearfix">
+                    <strong>Alice Williams</strong>
+                    <span>Head Chef </span>
+                    <p>Success isn’t really that difficult. There is a significant portion of the population here in North America, that actually want and need success really no magic to be hard. </p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimonial-block white-text left">              
+                  <div class="testimonial-avatar">
+                    <img src="/images/team/02.jpg" alt="">
+                  </div>
+                  <div class="testimonial-info clearfix">
+                    <strong>Anne Smith </strong>
+                    <span>Kitchen Manager</span>
+                    <p>For those of you who are serious about having more, doing more, giving more and being more, success is achievable with some understanding of what to do, discipline. </p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimonial-block white-text left">              
+                  <div class="testimonial-avatar">
+                    <img src="/images/team/03.jpg" alt="">
+                  </div>
+                  <div class="testimonial-info clearfix">
+                    <strong>Felica Queen </strong>
+                    <span>Head Waiter </span>
+                    <p>He first thing to remember about success is that it is a process – nothing more, nothing less. There is really no magic to it and it’s not reserved only few people. </p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimonial-block white-text left">
+                  <div class="testimonial-avatar">
+                    <img src="/images/team/04.jpg" alt="">
+                  </div>
+                  <div class="testimonial-info clearfix">
+                    <strong>Anne Smith </strong>
+                    <span>Kitchen Manager</span>
+                    <p>For those of you who are serious about having more, doing more, giving more and being more, success is achievable with some understanding of what to do, discipline. </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--=================================
+    testimonials -->
+
+    <!--=================================
+    our-clients -->
+
+    <section class="our-clients page-section-ptb white-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title text-center">
+              <div class="title-separator">
+                <i class="glyph-icon flaticon-food-27"></i>
+              </div>
+              <h2> <span class="text-orange">Our</span> Clients</h2>
+              <p>Check out our wold wide clients</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="owl-carousel" data-items="5" data-md-items="4" data-sm-items="3" data-xs-items="1" data-space="30" >
+              <div class="item">
+                <img class="center-block" src="/images/client/01.jpg" alt="">
+              </div>
+              <div class="item">
+                <img class="center-block" src="/images/client/02.jpg" alt="">
+              </div>
+              <div class="item">
+                <img class="center-block" src="/images/client/03.jpg" alt="">
+              </div>
+              <div class="item">
+                <img class="center-block" src="/images/client/04.jpg" alt="">
+              </div>
+              <div class="item">
+                <img class="center-block" src="/images/client/05.jpg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="reservation" id="reservation">
+      <div class="page-section-ptb">
+        <div class="container">
+          <div class="row">
+          <div class="col-lg-12 col-md-12">
+            <div class="section-title text-center">
+            <div class="title-separator">
+            <i class="glyph-icon flaticon-food-27"></i>
+            </div>
+              <h2> <span class="text-orange">Make </span> Reservation</h2>
+              <p>We provide free, secure and instantly confirmed online reservation.</p>
+            </div>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-lg-10  col-lg-offset-1">
+            <form class="form-horizontal" id="contactform">
+                <div class="contact-form"  id="contact-us">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                      <div class="form-field">
+                      <i class="fa fa-pencil"></i>
+                  <input class="web placeholder" type="text" placeholder="Full Name" name="web">
+                </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                      <div class="form-field">
+                      <i class="fa fa-phone"></i>
+                  <input class="web placeholder" type="text" placeholder="Phone Number" name="web">
+                </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                      <div class="form-field">
+                      <i class="fa fa-envelope-o"></i>
+                  <input class="web placeholder" type="text" placeholder="Your Email" name="web">
+                </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                      <div class="form-field" id="datepicker">
+                      <i class="fa fa-calendar add-on"></i>
+                  <input data-format="yyyy-MM-dd" type="text" placeholder="Select date">
+                </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                      <div class="form-field" id="timepicker">
+                      <i class="fa fa-clock-o icon-time add-on"></i>
+                  <input data-format="hh:mm:ss" type="text" placeholder="Select time">
+                </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                      <div class="form-field">
+                  <div class="selected-box">
+                          <div class="select"><select class="select-hidden">
+                            <option value="Person">Person</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="2">More then 2</option>
+                      </select><div class="select-styled">Person</div><ul class="select-options"><li rel="Person">Person</li><li rel="1">1</li><li rel="2">2</li><li rel="2">More then 2</li></ul></div>
+                        </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                    <div class="form-field">
+                      <i class="fa fa-pencil"></i>
+                      <textarea class="input-message placeholder" placeholder="Comment*" rows="7" name="message"></textarea>  
+                    </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                    <div class="form-submit mt-10 mb-30 text-center">
+                        
+                        <button id="submit" name="Submit" type="submit" onclick="return false;" class="button uppercase"> Book A Table</button>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="bottom-text text-center">You can also call : + <span class="text-orange"><strong>1 123 456 008 </strong></span> to make a reservation.</div>
+                  </div> 
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--=================================
+    our-clients -->
+    <section class="contact-map">
+      <div class="container-fluid">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3224.017231421863!2d-79.43780268425046!3d36.09306798010035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88532bae09664ccb%3A0xaa6b8f98d3fb8135!2s220+E+Front+St%2C+Burlington%2C+NC+27215%2C+USA!5e0!3m2!1sen!2sin!4v1475045272926" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen=""></iframe>
+      </div>
+    </section>
+    <section class="contact white-bg page-section-ptb"> 
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title text-center">
+            <div class="title-separator">
+              <i class="glyph-icon flaticon-food-27"></i>
+            </div>
+              <h2> <span class="text-orange">Contact </span> Us</h2>
+              <p>It would be great to hear from you! If you got any questions</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="contact-box text-center">
+                <i class="fa fa-map-marker"></i>
+                <h5>Address</h5>
+                <p>1234 North Avenue Luke, IN 360001</p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="contact-box text-center">
+                <i class="fa fa-phone"></i>
+                <h5>Phone</h5>
+                <p> (007) 123 456 7890</p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="contact-box text-center">
+                <i class="fa fa-envelope-o"></i>
+                <h5>Email</h5>
+                <p> support@website.com</p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="contact-box text-center">
+                <i class="fa fa-fax"></i>
+                <h5>Fax</h5>
+                <p>(007) 123 456 7890</p>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-30">
+            <div class="col-lg-12">
+            <div id="formmessage">Success/Error Message Goes Here</div>
+            <form class="form-horizontal" id="contactform" role="form" method="post" action="http://themes.potenzaglobalsolutions.com/html/the-zayka/php/contact-form.php">
+              <div class="contact-form">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                      <div class="form-field">
+                      <i class="fa fa-user"></i>
+                      <input id="name" type="text" placeholder="Name*" class="placeholder" name="name">
+                  </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                      <div class="form-field">
+                      <i class="fa fa-phone"></i>
+                    <input type="text" placeholder="Phone*" class="placeholder" name="phone">
+                  </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                      <div class="form-field">
+                      <i class="fa fa-envelope-o"></i>
+                  <input type="email" placeholder="Email*" class="placeholder" name="email">
+                  </div>
+                </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                      <div class="form-field">
+                    <i class="fa fa-pencil"></i>
+                      <textarea class="input-message placeholder" placeholder="Comment*" rows="7" name="message"></textarea>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="form-submit mt-10 text-center">
+                      <input type="hidden" name="action" value="sendEmail">
+                      <button id="submit" name="Submit" type="submit" value="Send" class="button"> Send Message</button>
+                    </div>
+                  </div> 
+                </form>
+              <div id="ajaxloader" style="display:none"><img class="center-block" src="/images/ajax-loader.gif" alt=""></div> 
+            </div>
+          </div>
+        </div>
+    </section>
+    <!--=================================
+    footer 2 -->
+
+    <footer class="footer footer-3 white-bg text-white page-section-pt bg-overlay-black-70">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="contact">
+              <h4 class="text-white"><span class="text-orange">CONTACT</span>  US</h4>
+              <p><span class="text-white">Fax :</span> (01) 123 456 7890</p>
+              <p><span class="text-white">E-mail :</span> support@website.com</p>
+              <p><span class="text-white">Address :</span> 1234 North Avenue Luke, IN 360001</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="opening-time">
+              <h4 class="text-white"><span class="text-orange">Open </span>  Hours</h4>
+              <ul>
+                <li>Mon-Friday<span class="text-right">8AM - 2PM</span></li>
+                <li>Saturday <span class="text-right">10AM - 4PM</span></li>
+                
+                <li>Sunday   <span class="text-right">11AM - 4PM</span></li>
+                <li>On public holidays   <span class="text-right">Closed</span></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-3 col-sm-3">
+            <div class="footer-gallery">
+              <h4 class="text-white"><span class="text-orange">Photo</span> Gallery</h4>
+              <ul>
+                <li><img class="img-responsive" src="/images/gallery/01.jpg" alt=""></li>
+                <li><img class="img-responsive" src="/images/gallery/02.jpg" alt=""></li>
+                <li><img class="img-responsive" src="/images/gallery/03.jpg" alt=""></li>
+                <li><img class="img-responsive" src="/images/gallery/04.jpg" alt=""></li>
+                <li><img class="img-responsive" src="/images/gallery/05.jpg" alt=""></li>
+                <li><img class="img-responsive" src="/images/gallery/06.jpg" alt=""></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 text-gray">
+              <p class="text-gray"> &copy;Copyright <span id="copyright"> </span> All right reserved by The Zayka.</p>
+              
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 text-right text-gray">
+              <a href="#">Terms of use</a> and <a href="#">Privacy policy.</a> </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    <!--=================================
+    back to top -->
+    <div id="back-to-top"><a class="top arrow" href="#top"><i class="fa fa-long-arrow-up"></i></a></div>
+    <!--=================================
+    footer -->
+    <!--=================================
+    jquery -->
+  <!-- jquery  -->
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <!-- bootstrap -->
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <!-- mega menu -->
+  <script type="text/javascript" src="/js/mega-menu/mega_menu.js"></script>
+  <!-- owl carousel -->
+  <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
+  <!-- REVOLUTION JS FILES -->
+  <script type="text/javascript" src="/revolution/js/jquery.themepunch.tools.min.js"></script>
+  <script type="text/javascript" src="/revolution/js/jquery.themepunch.revolution.min.js"></script>
+  <!-- SLIDER REVOLUTION 5.0 EXTENSIONS
+  (Load Extensions only on Local File Systems !
+  The following part can be removed on Server for On Demand Loading) -->
+  <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+  <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+  <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+  <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+  <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+  <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+  <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+  <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+  <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.video.min.js"></script>
+  <!-- SLIDER REVOLUTION CUSTOM  -->
+  <script type="text/javascript" src="/revolution/js/revolution-custom.js"></script>
+  <!-- style customizer  -->
+  <script type="text/javascript" src="/js/style-customizer.js"></script>
+  <!-- custom -->
+  <script type="text/javascript" src="/js/custom.js"></script>  
+  <script type="text/javascript" src="/js/datepicker/bootstrap-datetimepicker.min.js"></script>
+  <script data-defer="defer">
+    $('.nav-link').on('click',function(){
+      console.log('clicked nav link');
+      $('.nav-link').each(function(){
+        $(this).removeClass('active')
+      });
+      $(this).addClass('active');
+    })
+  </script>
+</body>
+<!-- Mirrored from themes.potenzaglobalsolutions.com/html/the-zayka/index-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 18 Nov 2018 23:51:28 GMT -->
 </html>
