@@ -1,12 +1,14 @@
 import React from "react";
 import Order from "../components/Order";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Checkout from '../components/Checkout';
 class OrderContainer extends React.Component{
     renderOrders=()=>{
         const {orders}=this.props.orders;
         if(orders.length===0){
             return(
                 <div>
-                    No Orders
+                    No products into basket
                 </div>
             )
         }
@@ -41,19 +43,30 @@ class OrderContainer extends React.Component{
         orders.forEach(function(element) {
             totalPrice+=element.price*element.quantity;
         });
+        if(totalPrice==0){
+            return(
+                <React.Fragment>
+                </React.Fragment>
+            )
+        }
         return(
             <React.Fragment>
                 <hr></hr>
-                <h5>{totalPrice}$</h5>
+                <h3>{totalPrice}$</h3>
             </React.Fragment>
         )
     }
-    renderForm=()=>{
+    renderCheckout=()=>{
+        var orders=this.props.orders.orders;
+        if(orders.length===0){
+            return(
+                <React.Fragment>
+                </React.Fragment>
+            )
+        }
         return(
             <div className="checkout-details">
-                <h1>Total:</h1> 
-                {this.calculateTotal()}
-                <button className="btn btn-danger">Pay</button>
+                <Link className="btn btn-danger" to="/checkout/payment">Pay</Link>
             </div>
         )
     }
@@ -61,7 +74,20 @@ class OrderContainer extends React.Component{
         return(
             <React.Fragment>
                 {this.renderOrders()}
-                {this.renderForm()}
+                <h1>Total:</h1> 
+                {this.calculateTotal()}
+                <Router>
+                    <Route
+                        exact
+                        path='/checkout'
+                        render={() => this.renderCheckout()}
+                    />
+                    <Route
+                        exact
+                        path='/checkout/payment'
+                        render={() => <Checkout/>}
+                    />
+                </Router>
             </React.Fragment>
         )
     }

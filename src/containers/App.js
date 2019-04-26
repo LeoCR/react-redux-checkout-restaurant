@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {addToCart} from '../actions/cartActions';
 class App extends React.Component {
   state={
-    showModal:'showAddForm',
+    showModal:'showBasket',
     product:null,
     hasOrders:false,
     totalOrders:0
@@ -19,7 +19,6 @@ class App extends React.Component {
     $('.modal').css({'display':'block'});
   }
   calculateOrders=()=>{
-    console.log('calculateOrders');
     var totalQuantity=0;
     try {
       this.props.orders.orders.forEach(function(element) {
@@ -47,12 +46,9 @@ class App extends React.Component {
           hasOrders:true
         });
     }
-    console.log('totalQuantity '+totalQuantity);
-    console.log('this.state.hasOrders '+this.state.hasOrders);
   }
   componentDidMount(){
     this.calculateOrders();
-    console.log(this.props);
   }
   addProductToCart=(product)=>{
     setTimeout(() => {
@@ -69,8 +65,6 @@ class App extends React.Component {
   }
   addToCart=(quantity)=>{
       const orderObject = Object.assign({quantity: quantity}, this.state.product);
-      console.log('App.addToCart.orderObject');
-      console.log(orderObject);
       this.props.addToCart(orderObject);
       this.calculateOrders();
   }

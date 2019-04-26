@@ -46,6 +46,8 @@ class Modal extends React.Component{
     }
     checkout=(e)=>{
         $('.modal').css({'display':'none'});
+        $('body').toggleClass('modal-opened');
+        window.location.replace("http://localhost:49652/checkout");
     }
     decrementOrder=(order)=>{
         if(order.quantity>1){
@@ -113,52 +115,11 @@ class Modal extends React.Component{
                 )}
                 </ul>
                 {this.calculateTotal()}
-                <button className="btn btn-primary">Checkout</button>
+                <button className="btn btn-primary" onClick={()=>this.checkout()}>Checkout</button>
             </div>
         )
     }
-    showAddForm=()=>{
-        this.props.calculateOrders();
-        return(
-            <React.Fragment>
-                <div className="modal-body">
-                    <label htmlFor="productName">Product Name:</label>
-                    <input type="hidden" name="idProduct" 
-                        id="idProduct" disabled/>
-                    <input type="text" name="productName" 
-                        id="productName" disabled/>
-                    <label htmlFor="quantity">Quantity:</label>
-                    <input type="number" name="quantity" 
-                        id="quantity-cart" />
-                    <button type="button" className="btn btn-danger" 
-                        onClick={this.decrement}>-</button>
-                    <button type="button" className="btn btn-success" 
-                        onClick={this.increment}>+</button>
-                    <label htmlFor="pricePerUnit">Price per Unit:</label>
-                    <input type="number" name="pricePerUnit" 
-                        id="pricePerUnit" disabled/>
-                    <label htmlFor="totalPrice">Total Price:</label>
-                    <input type="number" name="totalPrice" 
-                        id="totalPrice" disabled/>
-                </div>
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-primary" 
-                        onClick={(e)=>this.addToCart(e)}>Add to Cart</button>
-                    <button type="button" className="btn btn-danger" 
-                        data-dismiss="modal" 
-                        onClick={(e)=>this.checkout(e)}>Checkout</button>
-                </div>
-            </React.Fragment>        
-        );
-    }
     render(){
-        var ModalContent;
-        if(this.props.showModal==='showAddForm'){
-            ModalContent=this.showAddForm();
-        }
-        else{
-            ModalContent=this.showProducts();
-        }
         return(
             <div className="modal" tabIndex="-1" role="dialog">
                 <div className="modal-dialog" role="document">
@@ -171,7 +132,7 @@ class Modal extends React.Component{
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        {ModalContent}
+                        {this.showProducts()}
                     </div>
                 </div>
             </div>

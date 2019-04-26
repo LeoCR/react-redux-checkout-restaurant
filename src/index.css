@@ -1,5 +1,6 @@
 .modal{
   background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;
+  overflow: auto;
 }
 #checkout{
   padding-top: 120px;
@@ -23,11 +24,12 @@
   float: right;
   width: 100px;
 }
-.list-group-item{
+#checkout .list-orders .list-group-item{
   height:270px;
 }
-.list-orders{
+#checkout .list-orders{
   max-width: 500px;float: left;position: relative;
+  width: 100%;
 }
 #checkout-section {
 	position: relative;
@@ -38,4 +40,36 @@
   max-width: 400px;
   float: left;
   position: relative;
+  padding-left: 120px;
+}
+#payment-method{
+  float: left;
+  padding-left: 60px;
+  max-width: 700px;
+  width: 100%;
+}
+#payment-method ul,#payment-method ul li{
+  list-style: none;
+}
+#payment-method input[type="radio"]{
+  width: 40px;
+  float: left;
+}
+body.modal-opened #header{
+  z-index: 1 !important;
+}
+.form-payment input{
+  border: 1px solid black;
+  margin: 6px;
+}
+#payment-method .list-group-item{
+  min-height: 80px;
+}
+.list-group-item.checkout-item-card .form-payment,
+.list-group-item.checkout-item-paypal .form-payment{  
+  display: none;
+}
+.list-group-item.checkout-item-card.selected .form-payment,
+.list-group-item.checkout-item-paypal.selected .form-payment{  
+  display: block !important;
 }
