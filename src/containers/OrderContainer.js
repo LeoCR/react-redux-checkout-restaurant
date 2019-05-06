@@ -43,7 +43,7 @@ class OrderContainer extends React.Component{
         orders.forEach(function(element) {
             totalPrice+=element.price*element.quantity;
         });
-        if(totalPrice==0){
+        if(totalPrice===0){
             return(
                 <React.Fragment>
                 </React.Fragment>
