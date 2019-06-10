@@ -1,138 +1,58 @@
 import React from "react";
 import $ from 'jquery';
+import api from '../apis/api';
 import {connect} from 'react-redux';
+import UserDetails from './user/UserDetails';
 import {updateItemUnits,deleteFromCart} from '../actions/cartActions';
+import CartProducts from './shopping-cart/CartProducts';
 class Modal extends React.Component{
+    componentDidMount(){
+        this.setUserData();
+    }
+    setUserData=()=>{
+        var _this=this;
+        try {
+            api.get('/user/info').then(function (res) {
+                _this.setState({
+                    userLogged:res.data.user
+                });
+            })
+        } catch (error) {
+            console.log('An error occurs in Modal.setUserData() '+error);
+        }
+    }
     closeModal=(e)=>{
         $('.modal').css({'display':'none'});
         $('body').toggleClass('modal-opened');
-    }
-    calculateTotal=()=>{
-        var orders=this.props.orders.orders;
-        var totalPrice=0
-        orders.forEach(function(element) {
-            totalPrice+=element.price*element.quantity;
-        });
-        return(
-            <React.Fragment>
-                <hr></hr>
-                <h3>Total Price:</h3>
-                <h5>{totalPrice}$</h5>
-            </React.Fragment>
-        )
-    }
-    addToCart=(e)=>{
-        $('.modal').css({'display':'none'});
-        var quantity=parseInt($('#quantity-cart').val());
-        this.props.addToCart(quantity);
-        this.props.calculateOrders();
-    }
-    decrement=(e)=>{
-        var currentValue=parseInt($('#quantity-cart').val());
-        if(currentValue>1){
-            currentValue=parseInt($('#quantity-cart').val())-1;
-        }
-        $('#quantity-cart').val(currentValue);
-        var totalPrice=parseFloat($('#quantity-cart').val())*parseFloat($("#pricePerUnit").val());
-        $("#totalPrice").val(totalPrice);
-        this.props.calculateOrders();
-    }
-    increment=(e)=>{
-        var currentValue=parseInt($('#quantity-cart').val())+1;
-        $('#quantity-cart').val(currentValue);
-        var totalPrice=parseFloat($('#quantity-cart').val())*parseFloat($("#pricePerUnit").val());
-        $("#totalPrice").val(totalPrice);
-        this.props.calculateOrders();
-    }
+    } 
     checkout=(e)=>{
         $('.modal').css({'display':'none'});
         $('body').toggleClass('modal-opened');
-        window.location.replace("http://localhost:49652/checkout");
-    }
-    decrementOrder=(order)=>{
-        if(order.quantity>1){
-            order.quantity=order.quantity-1;
-            $('#quantity-added').val(order.quantity);
-        }
-        this.props.updateItemUnits(order);
-        this.props.calculateOrders();
-    }
-    incrementOrder=(order)=>{
-        order.quantity=order.quantity+1;
-        $('#quantity-added').val(order.quantity);
-        this.props.updateItemUnits(order);
-        this.props.calculateOrders();
-    }
-    deleteOrder=(order,e)=>{
-        e.preventDefault();
-        this.props.deleteFromCart(order.id);
-        this.props.calculateOrders();
-    }
-    updateQuantity=()=>{
-        console.log('updateQuantity')
-    }
-    showProducts=()=>{
-        var orders=this.props.orders.orders;
-        this.props.calculateOrders();
-        if(orders.length===0){
-            return(
-                <div className="modal-body">
-                    Your cart is Empty
-                </div>
-            )
-        } 
-        return(
-            <div id="show-orders" className="modal-body">
-                <ul style={{padding:'5px 15px',listStyle:'none'}}>
-                {orders.map(order => 
-                    <li key={order.id} 
-                        style={{listStyle:'none',width:'100%',
-                        position:'relative',float:'left'}}>
-                        <h5 style={{maxWidth:'350px',float:'left',
-                        width:'100%'}}>{order.name}</h5>
-                        <button style={{width:'50px' ,float:'left'}} 
-                            type="button" className="btn btn-danger" 
-                            data-dismiss="modal" aria-label="Close" 
-                            onClick={(e)=>this.deleteOrder(order,e)}>
-                                <span aria-hidden="true">&times;</span>
-                        </button>
-                        <p style={{width:'225px'}}>
-                            <label htmlFor="quantity-added" 
-                            style={{width:' 75px'}}>Quantity:</label>
-                            <input type="number" value={order.quantity}  
-                                style={{width:'80px',height:'30px',
-                                border:'1px solid black',padding:'0'}} 
-                                id="quantity-added" name="quantity-added"
-                                onChange={()=>this.updateQuantity()}/>
-                            <button type="button" className="btn btn-primary" 
-                                onClick={()=>this.decrementOrder(order)} 
-                                style={{float: 'right'}}>-</button>
-                            <button type="button" className="btn btn-success" 
-                                onClick={()=>this.incrementOrder(order)} 
-                                style={{float: 'right'}}>+</button>
-                        </p>
-                    </li>
-                )}
-                </ul>
-                {this.calculateTotal()}
-                <button className="btn btn-primary" onClick={()=>this.checkout()}>Checkout</button>
-            </div>
-        )
+        //window.location.replace("http://localhost:49652/checkout");
     }
     render(){
+        var ModalContent,titleModal;
+        if(this.props.showModal==='showUserDetails'){
+            ModalContent=<UserDetails userLogged={this.state.userLogged}/>;
+            titleModal='User Details';
+        }
+        else{
+            titleModal='Shopping Cart';
+            ModalContent=<CartProducts calculateOrders={this.props.calculateOrders} checkout={this.checkout}/>;
+        }
         return(
             <div className="modal" tabIndex="-1" role="dialog">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">Shopping Cart</h5>
+                            <h5 className="modal-title">{titleModal}</h5>
                             <button type="button" className="close" 
                                 data-dismiss="modal" aria-label="Close" 
                                 onClick={(e)=>this.closeModal(e)}>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        {this.showProducts()}
+                        {ModalContent}
                     </div>
                 </div>
             </div>

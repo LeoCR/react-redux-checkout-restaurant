@@ -11,6 +11,12 @@ class App extends React.Component {
     hasOrders:false,
     totalOrders:0
   }
+  setShowUserDetails=()=>{
+    $('body').removeClass('signup');
+    this.setState({
+      showModal:'showUserDetails'
+    })
+  }
   setShowOrders=()=>{
     this.setState({
       showModal:'showBasket'
@@ -68,6 +74,13 @@ class App extends React.Component {
       this.props.addToCart(orderObject);
       this.calculateOrders();
   }
+  setShowLogin=()=>{
+    $('body').removeClass('signup');
+    console.log('setShowLogin');
+    this.setState({
+      showModal:'showLogin'
+    })
+  }
   render() {
     return (
       <React.Fragment>
@@ -76,12 +89,15 @@ class App extends React.Component {
         orders={this.props.orders}
         totalOrders={this.state.totalOrders}/>
         <CartContainer 
+            setShowLogin={this.setShowLogin}
+            setShowUserDetails={this.setShowUserDetails}
             setShowOrders={this.setShowOrders}
             showModal={this.state.showModal} 
             hasOrders={this.state.hasOrders}
             totalOrders={this.state.totalOrders}
             addToCart={this.addToCart} 
             calculateOrders={this.calculateOrders}/>
+       
       </React.Fragment>
     );
   }

@@ -88,3 +88,6 @@ body.modal-opened #header{
   -o-transition:all 0.6s  ease-in-out;
   transition:all 0.6s  ease-in-out;
 }
+.checkout-item-card.selected ellipse{
+  fill:#0068a1 !important;
+}
