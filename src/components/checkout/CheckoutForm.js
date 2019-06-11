@@ -1,12 +1,17 @@
 import React from 'react';
 import $ from 'jquery';
 import api from '../../apis/api';
+import {connect} from 'react-redux';
+import history from '../../history';
 class CheckoutForm extends React.Component{
     constructor (props) {
         super(props);
         this.state = {
             userData:'',
             userId:0,
+            nextHeaderInvoice:0,
+            nextIdInvoiceDetail:0,
+            nextIdHeader:0,
             errorCardNumber: 'Invalid Card Number.',
             errorMonth:'Invalid number for month.',
             errorYear:'Invalid number for year.',
@@ -111,31 +116,15 @@ class CheckoutForm extends React.Component{
             });
         }
     }
-    onSubmitCheckoutForm=(event)=>{
+    onSubmitCheckoutForm=async (event)=>{
         event.preventDefault();
-        if(this.state.errorCardNumber!==''){
-            $('.error-card-numb').css({'display':'block'});
-        }
-        else{
-            $('.error-card-numb').css({'display':'none'});
-        }
+        var tempNextHeaderInvoice=this.state.nextHeaderInvoice;
+        
         if(this.state.errorDate!==''){
             $('.error-date').css({'display':'block'});
         }
         else{
             $('.error-date').css({'display':'none'});
-        }
-        if(this.state.errorCvc!==''){
-            $('.error-cvc').css({'display':'block'});    
-        }
-        else{
-            $('.error-cvc').css({'display':'none'});  
-        }
-        if(this.state.errorNameOnCard!==''){
-            $('.error-name-on-card').css({'display':'block'}); 
-        }
-        else{
-            $('.error-name-on-card').css({'display':'none'}); 
         }
         if(this.state.errorPostalCode!==''){
             $('.error-postal-code').css({'display':'block'}); 
@@ -143,68 +132,134 @@ class CheckoutForm extends React.Component{
         else{
             $('.error-postal-code').css({'display':'none'});
         }
+        if(this.state.errorNameOnCard!==''){
+            $('.error-name-on-card').css({'display':'block'}); 
+        }
+        else{
+            $('.error-name-on-card').css({'display':'none'}); 
+        }
+        if(this.state.errorCvc!==''){
+            $('.error-cvc').css({'display':'block'});    
+        }
+        else{
+            $('.error-cvc').css({'display':'none'});  
+        }
+        if(this.state.errorCardNumber!==''){
+            $('.error-card-numb').css({'display':'block'});
+        }
+        else{
+            $('.error-card-numb').css({'display':'none'});
+        }
         if(this.state.errorCardNumber===''&&this.state.errorPostalCode===''
         && this.state.errorNameOnCard===''&& this.state.errorCvc===''
         && this.state.errorDate===''){
-            console.log('Send FOrm Payment');
-            console.log(this.state.userData);
-            console.log(this.props);
             var date=new Date();
             var todayIs='';
             var total=0;
-            todayIs=date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
-            var formData = new FormData();
-            console.log('todayIs: '+todayIs);
-            if(this.state.userData._json!==undefined){
-                api.get('/api/find/email/'+this.state.userData._json.email)
-                .then(res=>{
-                    console.log(res.data);
-                })    
+            var currentMonth;
+            if(date.getMonth()<10){
+                currentMonth='0'+date.getMonth();
             }
-            if(this.state.userData.email!==undefined){
-                api.get('/api/find/email/'+this.state.userData.email)
-                .then(res=>{
-                    console.log(res.data);
-                })  
+            else{
+                currentMonth=date.getMonth();
             }
+            todayIs=date.getFullYear()+'-'+currentMonth+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+            
             if(this.props.orders){
-                console.log('this.props.orders.orders');
-                console.log(this.props.orders.orders);
-                var tempOrders={};
-                for(var i=0;i<=this.props.orders.orders.length;i++){
-                    console.log(this.props.orders.orders[i]);
+                var i=0;
+                var tempNextIdInvoiceDetail=this.state.nextIdInvoiceDetail;
+                var tempNextIdHeader=this.state.nextIdHeader;
+                do{
+                    if(this.props.orders.orders[i]!==undefined){
+                        var total=this.props.orders.orders[i].quantity*parseFloat(this.props.orders.orders[i].price)
+                        var headerInvoice={
+                            idHeader:tempNextIdHeader,
+                            dateOfBilling:todayIs,
+                            total:total,
+                            productId:this.props.orders.orders[i].id,
+                            productQuantity:this.props.orders.orders[i].quantity
+                        };
+                        var invoiceDetail={
+                            idInvoiceDetail:tempNextIdInvoiceDetail,
+                            clientRestaurant:this.state.userId,
+                            headerInvoice:tempNextHeaderInvoice
+                        }
+                        if(this.state.userId>0){
+                            await api.post('/api/add/header-invoice',{headerInvoice})
+                            .then(res=>{
+                                console.log('headerInvoice created ');
+                                console.log(res);
+                            })
+                            .catch(err=>{
+                                console.log('An error occurs');
+                                console.error(err);
+                            })
+                            await api.post('/api/add/invoice',{invoiceDetail})
+                            .then(res=>{
+                                console.log('Invoice created '+res);
+                            })
+                            .catch(err=>{
+                                console.log('An error occurs');
+                                console.error(err);
+                            })
+                            tempNextIdHeader++;
+                            tempNextIdInvoiceDetail++;
+                            tempNextHeaderInvoice++;
+                        }
+                    }
+                    i++;
                 }
+                while(i<=this.props.orders.orders.length)
+                console.log('Finished Payment Transaction');
+                history.push('/payment-successfully')
+                setTimeout(() => {
+                    localStorage.clear();
+                }, 1200);
             }
         }
     }
-    componentDidMount=()=>{
+    componentDidMount=async ()=>{
         var _this=this;
-        api.get('/user/info')
-            .then((res)=>{
-                _this.setState({
-                    userData:res.data.user
-                });
+        await api.get('/user/info')
+        .then((res)=>{
+            _this.setState({
+                userData:res.data.user
+            });
+        })
+        await api.get('/api/invoice-detail/get-last')
+        .then((res)=>{
+            _this.setState({
+                nextHeaderInvoice:parseInt(res.data[0].headerInvoice)+1
+            })
         }) 
-        setTimeout(() => { 
+        await api.get('/api/header-invoice/get-last-header-id')
+        .then((res)=>{
+            _this.setState({
+                nextIdHeader:parseInt(res.data[0].idHeader)+1
+            })
+        })
+        await api.get('/api/invoice-detail/get-last-id-invoice-detail')
+        .then((res)=>{
+            _this.setState({
+                nextIdInvoiceDetail:parseInt(res.data[0].idInvoiceDetail)+1
+            })
+        })
+        setTimeout(async() => { 
             if(_this.state.userData._json!==undefined){ 
-                api.get('/api/find/email/'+_this.state.userData._json.email).then((res)=>{
+                await api.get('/api/find/email/'+_this.state.userData._json.email).then((res)=>{
                     _this.setState({
                         userId:res.data.id
                     }); 
                 })
             }
             else if(_this.state.userData.email!==undefined){
-                api.get('/api/find/email/'+_this.state.userData.email).then((res)=>{
+                await api.get('/api/find/email/'+_this.state.userData.email).then((res)=>{
                     _this.setState({
                         userId:res.data.id
                     });
                 })
             }
-        }, 900);
-        setTimeout(() => {
-            console.log('_this.state.userId');
-            console.log(_this.state.userId);
-        }, 1200);
+        }, 700);
     }
     renderYears=()=>{
         var currentYear= new Date().getFullYear();
@@ -286,4 +341,9 @@ class CheckoutForm extends React.Component{
         )
     }
 }
-export default CheckoutForm;
+const mapStateToProps=(state)=>{
+    return{
+      orders:state.orders
+    }
+}
+export default connect(mapStateToProps)(CheckoutForm);

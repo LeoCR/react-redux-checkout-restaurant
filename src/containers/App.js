@@ -83,8 +83,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <React.Fragment>
-        <h1>Checkout</h1>
+      <React.Fragment> 
         <OrderContainer 
         orders={this.props.orders}
         totalOrders={this.state.totalOrders}/>
@@ -96,8 +95,8 @@ class App extends React.Component {
             hasOrders={this.state.hasOrders}
             totalOrders={this.state.totalOrders}
             addToCart={this.addToCart} 
-            calculateOrders={this.calculateOrders}/>
-       
+            calculateOrders={this.calculateOrders}
+            />
       </React.Fragment>
     );
   }

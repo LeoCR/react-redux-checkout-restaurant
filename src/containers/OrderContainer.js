@@ -1,7 +1,8 @@
 import React from "react";
 import Order from "../components/Order";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Router, Route, Link } from "react-router-dom";
 import Checkout from '../components/Checkout';
+import history from '../history';
 class OrderContainer extends React.Component{
     renderOrders=()=>{
         const {orders}=this.props.orders;
@@ -73,19 +74,33 @@ class OrderContainer extends React.Component{
     render(){
         return(
             <React.Fragment>
-                {this.renderOrders()}
-                <h1>Total:</h1> 
-                {this.calculateTotal()}
-                <Router>
+                <Router history={history}>
                     <Route
                         exact
                         path='/checkout'
-                        render={() => this.renderCheckout()}
+                        render={() => <React.Fragment>
+                            {this.renderOrders()}
+                            <h1>Total:</h1> 
+                            {this.calculateTotal()}
+                            {this.renderCheckout()}
+                        </React.Fragment>}
                     />
                     <Route
                         exact
                         path='/checkout/payment'
-                        render={() => <Checkout/>}
+                        render={() =><React.Fragment>
+                            {this.renderOrders()}
+                            <h1>Total:</h1> 
+                            {this.calculateTotal()}
+                             <Checkout/>
+                        </React.Fragment>}
+                    />
+                    <Route exact 
+                    path="/payment-successfully" 
+                    render={()=><React.Fragment>
+                            <h1>Payment Successfully</h1>
+                            <p>Thanks by your purchase</p>
+                    </React.Fragment>} 
                     />
                 </Router>
             </React.Fragment>
