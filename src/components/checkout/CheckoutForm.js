@@ -3,6 +3,7 @@ import $ from 'jquery';
 import api from '../../apis/api';
 import {connect} from 'react-redux';
 import history from '../../history';
+import {getOrders} from '../../actions/cartActions';
 class CheckoutForm extends React.Component{
     constructor (props) {
         super(props);
@@ -12,6 +13,7 @@ class CheckoutForm extends React.Component{
             nextHeaderInvoice:0,
             nextIdInvoiceDetail:0,
             nextIdHeader:0,
+            nextOrderCode:'',
             errorCardNumber: 'Invalid Card Number.',
             errorMonth:'Invalid number for month.',
             errorYear:'Invalid number for year.',
@@ -119,7 +121,7 @@ class CheckoutForm extends React.Component{
     onSubmitCheckoutForm=async (event)=>{
         event.preventDefault();
         var tempNextHeaderInvoice=this.state.nextHeaderInvoice;
-        
+        var _this=this;
         if(this.state.errorDate!==''){
             $('.error-date').css({'display':'block'});
         }
@@ -182,9 +184,12 @@ class CheckoutForm extends React.Component{
                         var invoiceDetail={
                             idInvoiceDetail:tempNextIdInvoiceDetail,
                             clientRestaurant:this.state.userId,
-                            headerInvoice:tempNextHeaderInvoice
+                            headerInvoice:tempNextHeaderInvoice,
+                            orderCode:this.state.nextOrderCode
                         }
                         if(this.state.userId>0){
+                            console.log('this.state.userId');
+                            console.log(this.state.userId);
                             await api.post('/api/add/header-invoice',{headerInvoice})
                             .then(res=>{
                                 console.log('headerInvoice created ');
@@ -210,11 +215,12 @@ class CheckoutForm extends React.Component{
                     i++;
                 }
                 while(i<=this.props.orders.orders.length)
-                console.log('Finished Payment Transaction');
-                history.push('/payment-successfully')
                 setTimeout(() => {
+                    console.log('Finished Payment Transaction');
+                    history.push('/payment-successfully')
                     localStorage.clear();
-                }, 1200);
+                    _this.props.getOrders();
+                }, 3900);
             }
         }
     }
@@ -226,6 +232,7 @@ class CheckoutForm extends React.Component{
                 userData:res.data.user
             });
         })
+       
         await api.get('/api/invoice-detail/get-last')
         .then((res)=>{
             _this.setState({
@@ -260,6 +267,13 @@ class CheckoutForm extends React.Component{
                 })
             }
         }, 700);
+        await api.get('/api/count-max-order-code')
+        .then((res)=>{
+            var tempNexOrder=parseInt(res.data[0].maxOrderCode)+1;
+            _this.setState({
+                nextOrderCode:'INVC'+tempNexOrder
+            })
+        })
     }
     renderYears=()=>{
         var currentYear= new Date().getFullYear();
@@ -346,4 +360,4 @@ const mapStateToProps=(state)=>{
       orders:state.orders
     }
 }
-export default connect(mapStateToProps)(CheckoutForm);
+export default connect(mapStateToProps,{getOrders})(CheckoutForm);
