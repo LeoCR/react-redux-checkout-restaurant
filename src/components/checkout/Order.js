@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {deleteFromCart} from '../actions/cartActions';
+import {deleteFromCart} from '../../actions/cartActions';
 class Order extends React.Component {
     deleteOrder=(id)=>{
         this.props.deleteFromCart(id);

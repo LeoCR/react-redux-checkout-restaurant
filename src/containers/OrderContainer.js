@@ -1,7 +1,7 @@
 import React from "react";
-import Order from "../components/Order";
+import Order from "../components/checkout/Order";
 import { Router, Route, Link } from "react-router-dom";
-import Checkout from '../components/Checkout';
+import Checkout from '../components/checkout/Checkout';
 import history from '../history';
 class OrderContainer extends React.Component{
     renderOrders=()=>{

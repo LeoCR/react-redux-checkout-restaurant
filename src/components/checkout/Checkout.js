@@ -1,10 +1,11 @@
 import React from "react";
 import {connect} from 'react-redux';
-import CheckoutForm from "./checkout/CheckoutForm";
-import CheckPayment from './checkout/CheckPayment';
-import IconPaypal from './checkout/IconPaypal';
-import IconMasterCard from './checkout/IconMasterCard';
-import IconVisa from './checkout/IconVisa';
+import CheckoutForm from "./CheckoutForm";
+import CheckPayment from './CheckPayment';
+import IconPaypal from './IconPaypal';
+import IconMasterCard from './IconMasterCard';
+import IconVisa from './IconVisa';
+import CheckoutPaypalForm from './CheckoutPaypalForm';
 class Checkout extends React.Component{
     //https://medium.com/@romanchvalbo/how-i-set-up-react-and-node-with-json-web-token-for-authentication-259ec1a90352
     render(){
@@ -27,15 +28,13 @@ class Checkout extends React.Component{
                                 <CheckoutForm/>  
                             </div>
                         </li>
+                        {/* 
                         <li className="list-group-item checkout-item-paypal">
                             <CheckPayment method='paypal'/>
                             <IconPaypal/>
-                             <div className="form-payment method-to-pay" style={{width:'100%',position:'relative',float:'left'}}>
-                                <p>To complete the transaction, we will send you to PayPal's secure servers.</p>
-                                <button className="btn btn-danger">Proceed</button>
-                                <span style={{fontSize:'8px'}}>By completing the purchase, you agree to these <a href="#">Terms of Use</a></span>
-                             </div>
-                        </li>
+                            <CheckoutPaypalForm/>
+                        </li> 
+                        */}
                     </ul>
                 </div>
             )

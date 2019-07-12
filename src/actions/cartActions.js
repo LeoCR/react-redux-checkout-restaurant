@@ -1,4 +1,4 @@
-import { ADD_TO_CART,DELETE_FROM_CART,UPDATE_ITEM_UNITS,SHOW_ORDERS} from "../constants/cartTypes";
+import { ADD_TO_CART,DELETE_FROM_CART,UPDATE_ITEM_UNITS,SHOW_ORDERS,DELETE_ORDERS} from "../constants/cartTypes";
 export const addToCart = (order) => {
     return {
         type: ADD_TO_CART,
@@ -14,6 +14,11 @@ export const deleteFromCart=(id)=> {
 export const getOrders = () => {
     return {
         type: SHOW_ORDERS
+    };
+};
+export const deleteOrders = () => {
+    return {
+        type: DELETE_ORDERS
     };
 };
 export function updateItemUnits(order) {

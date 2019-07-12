@@ -3,7 +3,7 @@ import $ from 'jquery';
 import api from '../../apis/api';
 import {connect} from 'react-redux';
 import history from '../../history';
-import {getOrders} from '../../actions/cartActions';
+import {getOrders,deleteOrders} from '../../actions/cartActions';
 class CheckoutForm extends React.Component{
     constructor (props) {
         super(props);
@@ -176,16 +176,17 @@ class CheckoutForm extends React.Component{
                         var total=this.props.orders.orders[i].quantity*parseFloat(this.props.orders.orders[i].price)
                         var headerInvoice={
                             idHeader:tempNextIdHeader,
-                            dateOfBilling:todayIs,
                             total:total,
                             productId:this.props.orders.orders[i].id,
+                            productName:this.props.orders.orders[i].name,
                             productQuantity:this.props.orders.orders[i].quantity
                         };
                         var invoiceDetail={
                             idInvoiceDetail:tempNextIdInvoiceDetail,
                             clientRestaurant:this.state.userId,
                             headerInvoice:tempNextHeaderInvoice,
-                            orderCode:this.state.nextOrderCode
+                            orderCode:this.state.nextOrderCode,
+                            dateOfBilling:todayIs
                         }
                         if(this.state.userId>0){
                             console.log('this.state.userId');
@@ -219,6 +220,7 @@ class CheckoutForm extends React.Component{
                     console.log('Finished Payment Transaction');
                     history.push('/payment-successfully')
                     localStorage.clear();
+                    _this.props.deleteOrders();
                     _this.props.getOrders();
                 }, 3900);
             }
@@ -360,4 +362,4 @@ const mapStateToProps=(state)=>{
       orders:state.orders
     }
 }
-export default connect(mapStateToProps,{getOrders})(CheckoutForm);
+export default connect(mapStateToProps,{getOrders,deleteOrders})(CheckoutForm);
