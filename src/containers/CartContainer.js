@@ -1,21 +1,29 @@
 import React from "react";
-import Cart from "../components/shopping-cart/Cart";
-class CartContainer extends React.Component{
-    render(){
-        return(
-            <React.Fragment>
-                <Cart 
-                    setShowOrders={this.props.setShowOrders}
-                    setShowUserDetails={this.props.setShowUserDetails}
-                    showModal={this.props.showModal}
-                    setShowLogin={this.props.setShowLogin}
-                    addToCart={this.props.addToCart}
-                    totalOrders={this.props.totalOrders}
-                    hasOrders={this.props.hasOrders}
-                    calculateOrders={this.props.calculateOrders}
-                />
-            </React.Fragment>
-        )
-    }
+import Basket from "../components/shopping-cart/Basket";
+import Login from "../components/user/Login";
+import Modal from "../components/Modal";
+const CartContainer=(props)=>{
+    return(
+        <React.Fragment>
+            <Basket 
+                hasOrders={props.hasOrders} 
+                totalOrders={props.totalOrders}
+                calculateOrders={props.calculateOrders}
+                setShowOrders={props.setShowOrders}/>
+            <Login 
+                setShowLogin={props.setShowLogin}
+                setShowUserDetails={props.setShowUserDetails}
+                showModal={props.showModal} 
+            />
+            <Modal 
+                setShowUserCreated={props.setShowUserCreated}
+                setShowSignUp={props.setShowSignUp} 
+                setShowLogin={props.setShowLogin}
+                addToCart={props.addToCart} 
+                calculateOrders={props.calculateOrders}
+                showModal={props.showModal}
+            />
+        </React.Fragment>
+    )
 }
 export default CartContainer;
