@@ -6,9 +6,6 @@ import * as serviceWorker from './serviceWorker';
 import {Provider} from "react-redux";
 import store from "./store"; 
 
-store.subscribe( () => {
-    localStorage.setItem('orders', JSON.stringify(store.getState()))
-});
 ReactDOM.render(
 <Provider store={store}>
     <App /> 

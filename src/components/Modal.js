@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import UserDetails from './user/UserDetails';
 import {updateItemUnits,deleteFromCart} from '../actions/cartActions';
 import CartProducts from './shopping-cart/CartProducts';
+import {setUser} from "../actions/userActions";
 class Modal extends React.Component{
     componentDidMount(){
         this.setUserData();
@@ -12,11 +13,11 @@ class Modal extends React.Component{
     setUserData=()=>{
         var _this=this;
         try {
-            api.get('/user/info').then(function (res) {
-                _this.setState({
-                    userLogged:res.data.user
-                });
-            })
+            api.get('/api/user/info').then(function (res) {
+                if(res.data.user){
+                    _this.props.setUser(res.data.user);
+                }
+            });
         } catch (error) {
             console.log('An error occurs in Modal.setUserData() '+error);
         }
@@ -28,12 +29,11 @@ class Modal extends React.Component{
     checkout=(e)=>{
         $('.modal').css({'display':'none'});
         $('body').toggleClass('modal-opened');
-        //window.location.replace("http://localhost:49652/checkout");
     }
     render(){
         var ModalContent,titleModal;
         if(this.props.showModal==='showUserDetails'){
-            ModalContent=<UserDetails userLogged={this.state.userLogged}/>;
+            ModalContent=<UserDetails/>;
             titleModal='User Details';
         }
         else{
@@ -61,8 +61,9 @@ class Modal extends React.Component{
 }
 const mapStateToProps=(state)=>{
     return{
-      orders:state.orders
+      orders:state.orders,
+      user:state.user.user
     }
 }
 
-export default connect(mapStateToProps,{updateItemUnits,deleteFromCart})(Modal)
+export default connect(mapStateToProps,{updateItemUnits,deleteFromCart,setUser})(Modal)

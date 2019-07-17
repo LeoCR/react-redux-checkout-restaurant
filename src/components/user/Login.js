@@ -3,12 +3,12 @@ import $ from 'jquery';
 import ReactDOM from 'react-dom';
 import api from '../../apis/api';
 class Login extends React.Component{
-    showLogin=(e)=>{
+    showLogin=async (e)=>{
         console.log('ShowLogin');
         e.preventDefault();
         var isAuthenticathed=false;
         var _this=this;
-        api.get('/validate/authentication')
+        await api.get('/api/validate/authentication')
         .then(function (response) {
             isAuthenticathed=response.data.isAuthenticated;
             if(isAuthenticathed){
@@ -19,6 +19,7 @@ class Login extends React.Component{
             }
         })
         .catch(function (error) {
+            console.log("An error occurs in Login.showLogin(): ");
             console.log(error);
         });
         setTimeout(() => {

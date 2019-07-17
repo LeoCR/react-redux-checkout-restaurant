@@ -19,9 +19,11 @@ const CartContainer=(props)=>{
                 setShowUserCreated={props.setShowUserCreated}
                 setShowSignUp={props.setShowSignUp} 
                 setShowLogin={props.setShowLogin}
+                setShowUserDetails={props.setShowUserDetails}
                 addToCart={props.addToCart} 
                 calculateOrders={props.calculateOrders}
                 showModal={props.showModal}
+                setShowUserDetails={props.setShowUserDetails}
             />
         </React.Fragment>
     )

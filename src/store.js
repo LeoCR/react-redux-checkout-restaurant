@@ -9,4 +9,8 @@ const store = createStore(rootReducer, storageState, composeEnhancers(
     applyMiddleware(...middleware)
 ));
 
+store.subscribe( () => {
+    localStorage.setItem('orders', JSON.stringify(store.getState()))
+});
+
 export default store;
