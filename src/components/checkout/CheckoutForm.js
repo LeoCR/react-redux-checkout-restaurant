@@ -166,7 +166,6 @@ class CheckoutForm extends React.Component{
                 currentMonth=date.getMonth();
             }
             todayIs=date.getFullYear()+'-'+currentMonth+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
-            
             if(this.props.orders){
                 var i=0;
                 var tempNextIdInvoiceDetail=this.state.nextIdInvoiceDetail;
@@ -175,18 +174,18 @@ class CheckoutForm extends React.Component{
                     if(this.props.orders.orders[i]!==undefined){
                         var total=this.props.orders.orders[i].quantity*parseFloat(this.props.orders.orders[i].price)
                         var headerInvoice={
-                            idHeader:tempNextIdHeader,
+                            id_header:tempNextIdHeader,
                             total:total,
-                            productId:this.props.orders.orders[i].id,
-                            productName:this.props.orders.orders[i].name,
-                            productQuantity:this.props.orders.orders[i].quantity
+                            product_id:this.props.orders.orders[i].id,
+                            product_name:this.props.orders.orders[i].name,
+                            product_quantity:this.props.orders.orders[i].quantity
                         };
                         var invoiceDetail={
-                            idInvoiceDetail:tempNextIdInvoiceDetail,
-                            clientRestaurant:this.state.userId,
-                            headerInvoice:tempNextHeaderInvoice,
-                            orderCode:this.state.nextOrderCode,
-                            dateOfBilling:todayIs
+                            id_invoice_detail:tempNextIdInvoiceDetail,
+                            client_restaurant:this.state.userId,
+                            header_invoice:tempNextHeaderInvoice,
+                            order_code:this.state.nextOrderCode,
+                            date_of_billing:todayIs
                         }
                         if(this.state.userId>0){
                             console.log('this.state.userId');
@@ -197,7 +196,7 @@ class CheckoutForm extends React.Component{
                                 console.log(res);
                             })
                             .catch(err=>{
-                                console.log('An error occurs');
+                                console.log('An error occurs on post(/api/add/header-invoice)');
                                 console.error(err);
                             })
                             await api.post('/api/add/invoice',{invoiceDetail})
@@ -205,7 +204,7 @@ class CheckoutForm extends React.Component{
                                 console.log('Invoice created '+res);
                             })
                             .catch(err=>{
-                                console.log('An error occurs');
+                                console.log('An error occurs on post(/api/add/invoice)');
                                 console.error(err);
                             })
                             tempNextIdHeader++;
@@ -219,7 +218,7 @@ class CheckoutForm extends React.Component{
                 setTimeout(() => {
                     console.log('Finished Payment Transaction');
                     history.push('/payment-successfully')
-                    localStorage.clear();
+                    //localStorage.clear();
                     _this.props.deleteOrders();
                     _this.props.getOrders();
                 }, 3900);
@@ -228,7 +227,7 @@ class CheckoutForm extends React.Component{
     }
     componentDidMount=async ()=>{
         var _this=this;
-        await api.get('/user/info')
+        await api.get('/api/user/info')
         .then((res)=>{
             _this.setState({
                 userData:res.data.user
@@ -238,19 +237,19 @@ class CheckoutForm extends React.Component{
         await api.get('/api/invoice-detail/get-last')
         .then((res)=>{
             _this.setState({
-                nextHeaderInvoice:parseInt(res.data[0].headerInvoice)+1
+                nextHeaderInvoice:parseInt(res.data[0].header_invoice)+1
             })
         }) 
         await api.get('/api/header-invoice/get-last-header-id')
         .then((res)=>{
             _this.setState({
-                nextIdHeader:parseInt(res.data[0].idHeader)+1
+                nextIdHeader:parseInt(res.data[0].id_header)+1
             })
         })
         await api.get('/api/invoice-detail/get-last-id-invoice-detail')
         .then((res)=>{
             _this.setState({
-                nextIdInvoiceDetail:parseInt(res.data[0].idInvoiceDetail)+1
+                nextIdInvoiceDetail:parseInt(res.data[0].id_invoice_detail)+1
             })
         })
         setTimeout(async() => { 
