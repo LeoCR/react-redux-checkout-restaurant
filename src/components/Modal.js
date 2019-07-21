@@ -14,8 +14,8 @@ class Modal extends React.Component{
         var _this=this;
         try {
             api.get('/api/user/info').then(function (res) {
-                if(res.data.user){
-                    _this.props.setUser(res.data.user);
+                if(res.data){
+                    _this.props.setUser(res.data);
                 }
             });
         } catch (error) {
@@ -62,7 +62,7 @@ class Modal extends React.Component{
 const mapStateToProps=(state)=>{
     return{
       orders:state.orders,
-      user:state.user.user
+      user:state.user  
     }
 }
 

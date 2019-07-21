@@ -230,7 +230,7 @@ class CheckoutForm extends React.Component{
         await api.get('/api/user/info')
         .then((res)=>{
             _this.setState({
-                userData:res.data.user
+                userData:res.data
             });
         })
        
@@ -252,21 +252,12 @@ class CheckoutForm extends React.Component{
                 nextIdInvoiceDetail:parseInt(res.data[0].id_invoice_detail)+1
             })
         })
-        setTimeout(async() => { 
-            if(_this.state.userData._json!==undefined){ 
-                await api.get('/api/find/email/'+_this.state.userData._json.email).then((res)=>{
-                    _this.setState({
-                        userId:res.data.id
-                    }); 
-                })
-            }
-            else if(_this.state.userData.email!==undefined){
+        setTimeout(async() => {
                 await api.get('/api/find/email/'+_this.state.userData.email).then((res)=>{
                     _this.setState({
                         userId:res.data.id
                     });
                 })
-            }
         }, 700);
         await api.get('/api/count-max-order-code')
         .then((res)=>{
