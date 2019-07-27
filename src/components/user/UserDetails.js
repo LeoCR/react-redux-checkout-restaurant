@@ -5,6 +5,10 @@ class UserDetails extends React.Component{
         e.preventDefault();
         window.location.replace("/logout");
     }
+    getProfile=(e)=>{
+        e.preventDefault();
+        window.location.replace('/user/profile/');
+    }
     render(){
             return(
                 <React.Fragment>
@@ -20,6 +24,7 @@ class UserDetails extends React.Component{
                             <button id="btn-logout" onClick={(e)=>this.logOut(e)} className="btn btn-danger">
                                 Logout
                             </button>
+                            <span onClick={(e)=>this.getProfile(e)} className="btn btn-success">Profile</span>
                         </div>
                 </React.Fragment>
             )
