@@ -292,7 +292,7 @@ class CheckoutForm extends React.Component{
                 <p className="error-msg error-card-numb" style={{display:'none',margin:'0 0px 20px 0'}}>
                     {this.state.errorCardNumber}
                 </p>
-                <div style={{width:'120px',position:'relative',float:'left'}} className="form-group">
+                <div style={{width:'95px',position:'relative',float:'left'}} className="form-group">
                     <select name="month" id="month"
                         style={{marginLeft:'10px'}}
                         onChange={this.onChangeMonth}>
@@ -312,10 +312,10 @@ class CheckoutForm extends React.Component{
                     </select>
                 </div>
 
-                <div className="form-group" style={{width:'120px',position:'relative',float:'left'}}>
+                <div className="form-group" style={{width:'80px',position:'relative',float:'left'}}>
                     {this.renderYears()}
                 </div>
-                <div className="form-group" style={{width:'295px',position:'relative',float:'left'}}>
+                <div className="form-group" style={{width:'155px',position:'relative',float:'left'}}>
                     <input type="password" name="cvc" id="cvc" placeholder="CVC" style={{width:'110px',margin:'0px 0px 0px 35px'}} minlength="3" maxlength="3" onChange={(e)=>this.onChangeCvc(e)} />
                 </div>
                 <p className="error-msg error-date" style={{display:'none',height: '15px',lineHeight: 1,width: '270px',position: 'relative',float: 'left'}}>

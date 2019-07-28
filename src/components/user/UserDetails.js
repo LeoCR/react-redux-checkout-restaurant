@@ -24,7 +24,7 @@ class UserDetails extends React.Component{
                             <button id="btn-logout" onClick={(e)=>this.logOut(e)} className="btn btn-danger">
                                 Logout
                             </button>
-                            <span onClick={(e)=>this.getProfile(e)} className="btn btn-success">Profile</span>
+                            <button onClick={(e)=>this.getProfile(e)} className="btn btn-success">Profile</button>
                         </div>
                 </React.Fragment>
             )
