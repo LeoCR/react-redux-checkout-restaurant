@@ -52,7 +52,7 @@ class OrderContainer extends React.Component{
         }
         return(
             <React.Fragment>
-                <hr></hr>
+                <h1 style={{float:'left'}}>Total:</h1> 
                 <h3 style={{float:'left'}}>{totalPrice}$</h3>
             </React.Fragment>
         )
@@ -80,7 +80,6 @@ class OrderContainer extends React.Component{
                         path='/checkout'
                         render={() => <React.Fragment>
                             {this.renderOrders()}
-                            <h1 style={{float:'left'}}>Total:</h1> 
                             {this.calculateTotal()}
                             {this.renderCheckout()}
                         </React.Fragment>}
@@ -90,7 +89,6 @@ class OrderContainer extends React.Component{
                         path='/checkout/payment'
                         render={() =><React.Fragment>
                             {this.renderOrders()}
-                            <h1 style={{float:'left'}}>Total:</h1> 
                             {this.calculateTotal()}
                              <Checkout/>
                         </React.Fragment>}
