@@ -49,6 +49,9 @@ class CartProducts extends React.Component{
             return(
                 <div className="modal-body">
                     Your cart is Empty
+                    <button className="btn btn-success" onClick={(e)=>{
+                      window.location.replace("/#menu")
+                    }}>Go to Cart</button>
                 </div>
             )
       } 
