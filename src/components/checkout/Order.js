@@ -1,9 +1,24 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {deleteFromCart} from '../../actions/cartActions';
+import {addPaypalItemsToCart,clearPaypalItems} from '../../actions/paypalActions';
 class Order extends React.Component {
     deleteOrder=(id)=>{
+        console.log('deleteOrder');
+        this.props.clearPaypalItems();
+        const {orders}=this.props.orders;
         this.props.deleteFromCart(id);
+        var tempSubtotal;
+        for (let m = 0; m < orders.length; m++) {
+            var tempItem={};
+            tempSubtotal+=parseFloat(orders[m].quantity*orders[m].price);
+            tempItem.name=orders[m].name;
+            tempItem.description=orders[m].description;
+            tempItem.price=orders[m].price;
+            tempItem.currency=orders[m].currency;
+            tempItem.quantity=orders[m].quantity.toString();
+            this.props.addPaypalItemsToCart(tempItem);
+        }
     }
     render(){
         if(!this.props.info){
@@ -30,7 +45,8 @@ class Order extends React.Component {
 }
 const mapStateToProps=(state)=>{
     return{
-      orders:state.orders
+      orders:state.orders,
+      paypalItems:state.paypalItems
     }
 }
-export default connect(mapStateToProps,{deleteFromCart})(Order)
+export default connect(mapStateToProps,{deleteFromCart,addPaypalItemsToCart,clearPaypalItems})(Order)

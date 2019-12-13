@@ -218,7 +218,6 @@ class CheckoutForm extends React.Component{
                 setTimeout(() => {
                     console.log('Finished Payment Transaction');
                     history.push('/payment-successfully')
-                    //localStorage.clear();
                     _this.props.deleteOrders();
                     _this.props.getOrders();
                 }, 3900);
@@ -232,32 +231,31 @@ class CheckoutForm extends React.Component{
             _this.setState({
                 userData:res.data
             });
-        })
-       
+        });
         await api.get('/api/invoice-detail/get-last')
         .then((res)=>{
             _this.setState({
                 nextHeaderInvoice:parseInt(res.data[0].header_invoice)+1
             })
-        }) 
+        }); 
         await api.get('/api/header-invoice/get-last-header-id')
         .then((res)=>{
             _this.setState({
                 nextIdHeader:parseInt(res.data[0].id_header)+1
             })
-        })
+        });
         await api.get('/api/invoice-detail/get-last-id-invoice-detail')
         .then((res)=>{
             _this.setState({
                 nextIdInvoiceDetail:parseInt(res.data[0].id_invoice_detail)+1
             })
-        })
+        });
         setTimeout(async() => {
                 await api.get('/api/find/email/'+_this.state.userData.email).then((res)=>{
                     _this.setState({
                         userId:res.data.id
                     });
-                })
+                });
         }, 700);
         await api.get('/api/count-max-order-code')
         .then((res)=>{
@@ -265,7 +263,7 @@ class CheckoutForm extends React.Component{
             _this.setState({
                 nextOrderCode:'INVC'+tempNexOrder
             })
-        })
+        });
     }
     renderYears=()=>{
         var currentYear= new Date().getFullYear();

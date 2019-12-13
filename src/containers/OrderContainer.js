@@ -100,6 +100,13 @@ class OrderContainer extends React.Component{
                             <p>Thanks by your purchase</p>
                     </React.Fragment>} 
                     />
+                    <Route exact 
+                    path="/paypal/success" 
+                    render={()=><React.Fragment>
+                            <h1>Payment Successfully</h1>
+                            <p>Thanks by your purchase</p>
+                    </React.Fragment>} 
+                    />
                 </Router>
             </React.Fragment>
         )
