@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import api from '../../apis/api';
 import Cookies from 'universal-cookie';
+import {setInvoiceDetails,clearInvoiceDetails} from '../../actions/invoiceDetailActions';
+import {setHeaderInvoices,clearHeaderInvoice} from '../../actions/headerInvoiceActions';
 const cookies = new Cookies();
 class CheckoutPaypalForm extends React.Component{
     constructor (props) {
@@ -19,53 +21,39 @@ class CheckoutPaypalForm extends React.Component{
         }
     }
     componentDidMount=async ()=>{
+        this.props.clearInvoiceDetails();
+        this.props.clearHeaderInvoice();
         var _this=this;
-        try {
-            cookies.remove('restaurant_header_invoices', { path: '/' });
-            cookies.remove('restaurant_invoice_details', { path: '/' });
-        } catch (error) {
-            console.log('An error occurs in componentDidMount()');
-            console.log(error);
-        }
         await api.get('/api/user/info')
         .then((res)=>{
             _this.setState({
                 userData:res.data
             });
-        })
+        });
         await api.get('/api/invoice-detail/get-last')
         .then((res)=>{
             _this.setState({
                 nextHeaderInvoice:parseInt(res.data[0].header_invoice)+1
             })
-        }) 
+        }); 
         await api.get('/api/header-invoice/get-last-header-id')
         .then((res)=>{
             _this.setState({
                 nextIdHeader:parseInt(res.data[0].id_header)+1
             })
-        })
+        });
         await api.get('/api/invoice-detail/get-last-id-invoice-detail')
         .then((res)=>{
             _this.setState({
                 nextIdInvoiceDetail:parseInt(res.data[0].id_invoice_detail)+1
             })
-        })
-        setTimeout(async() => { 
-            if(_this.state.userData._json!==undefined){ 
-                await api.get('/api/find/email/'+_this.state.userData._json.email).then((res)=>{
-                    _this.setState({
-                        userId:res.data.id
-                    }); 
-                })
-            }
-            else if(_this.state.userData.email!==undefined){
+        });
+        setTimeout(async() => {
                 await api.get('/api/find/email/'+_this.state.userData.email).then((res)=>{
                     _this.setState({
                         userId:res.data.id
                     });
-                })
-            }
+                });
         }, 700);
         await api.get('/api/count-max-order-code')
         .then((res)=>{
@@ -73,7 +61,7 @@ class CheckoutPaypalForm extends React.Component{
             _this.setState({
                 nextOrderCode:'INVC'+tempNexOrder
             })
-        })
+        });
         var tempSubtotal=0;
          
         for (let index = 0; index < this.props.orders.orders.length; index++) {
@@ -87,6 +75,9 @@ class CheckoutPaypalForm extends React.Component{
         this.setState({
             isValid:!this.state.isValid
         });
+    }
+    clickedSubmitBtn=(e)=>{
+        e.currentTarget.classList.toggle('running');
     }
     submitPaypalForm=async(e)=>{
         e.preventDefault();
@@ -103,9 +94,9 @@ class CheckoutPaypalForm extends React.Component{
             });
             
             if(this.state.isValid){
-                var shipping="1";
+                var shipping="0";
                 var tax="0.15";
-                var tempTotal=parseFloat(this.state.subtotal+parseFloat(tax)+parseFloat(shipping));
+                var tempTotal=parseFloat(this.state.subtotal)+parseFloat(tax)+parseFloat(shipping);
                 cookies.set('restaurant_total', tempTotal);
                 
                 var date=new Date();
@@ -130,6 +121,7 @@ class CheckoutPaypalForm extends React.Component{
                             var headerInvoice={
                                 id_header:tempNextIdHeader,
                                 total:total,
+                                subtotal:this.props.orders.orders[i].price,
                                 product_id:this.props.orders.orders[i].id,
                                 product_name:this.props.orders.orders[i].name,
                                 product_quantity:this.props.orders.orders[i].quantity
@@ -151,31 +143,40 @@ class CheckoutPaypalForm extends React.Component{
                         }
                         i++;
                     }
-                    while(i<=this.props.orders.orders.length)
-                    cookies.set('restaurant_header_invoices', headerInvoices);
-                    cookies.set('restaurant_invoice_details', invoiceDetails);
-                }
-                setTimeout(() => {
-                    api.post('/api/pay-with-paypal', {
+                    while(i<=this.props.orders.orders.length);
+                    this.props.setInvoiceDetails(invoiceDetails);
+                    this.props.setHeaderInvoices(headerInvoices);
+                    
+                    setTimeout(() => {
+                        api.post('/api/pay-with-paypal', {
+                            total:parseFloat(tempTotal).toFixed(2),
+                            items: _this.props.paypalItems.paypalItems,
+                            subtotal: parseFloat(_this.state.subtotal).toFixed(2),
+                            shipping:shipping,
+                            tax:tax
+                        })
+                        .then(function (response) {
+                            console.log('Paypal Success response');
+                            console.log(response);
+                            window.location.href =response.data;
+                            resolve('resolved');
+                        })
+                        .catch(function (error) {
+                            console.log('An error occurs on post submitPaypalForm()');
+                            console.log(error);
+                            reject(error)
+                        });
+                    }, 1000);
+                    var tempJSON={
                         total:parseFloat(tempTotal).toFixed(2),
-                        items: this.props.paypalItems.paypalItems,
-                        subtotal: parseFloat(this.state.subtotal).toFixed(2),
+                        items: _this.props.paypalItems.paypalItems,
+                        subtotal: parseFloat(_this.state.subtotal).toFixed(2),
                         shipping:shipping,
                         tax:tax
-                    })
-                    .then(function (response) {
-                        console.log('Paypal Success');
-                        console.log(response);
-                        window.location.href =response.data;
-                        resolve('resolved');
-                    })
-                    .catch(function (error) {
-                        console.log('An error occurs on post submitPaypalForm()');
-                        console.log(error);
-                        reject(error)
-                    });
-                }, 1000);
-                
+                    };
+                    console.log(tempJSON);
+                    
+                }
             }
             else{
                 resolve('resolved');
@@ -187,7 +188,10 @@ class CheckoutPaypalForm extends React.Component{
             <div className="form-payment method-to-pay" style={{width:'100%',position:'relative',float:'left'}}>
                 <form onSubmit={(e)=>this.submitPaypalForm(e)}>                    
                     <p>To complete the transaction, we will send you to PayPal's secure servers.</p>
-                    <button className="btn btn-danger" type="submit">Proceed</button>
+                    <button className="btn btn-danger ld-ext-right" type="submit" onClick={(e)=>this.clickedSubmitBtn(e)}>
+                        Proceed
+                        <div className="ld ld-ring ld-spin"></div>
+                    </button>
                     <span style={{fontSize:'8px'}}>By completing the purchase, you agree to these <a href="#">Terms of Use</a></span>
                     <label className="switch">
                         <input type="checkbox" value={this.state.isValid} onChange={this.onChangeTerms} />
@@ -200,8 +204,10 @@ class CheckoutPaypalForm extends React.Component{
 }
 const mapStateToProps=(state)=>{
     return{
-      orders:state.orders,
-      paypalItems:state.paypalItems
+        headerInvoices:state.headerInvoices,
+        invoiceDetails:state.invoiceDetails,
+        orders:state.orders,
+        paypalItems:state.paypalItems
     }
 }
-export default connect(mapStateToProps)(CheckoutPaypalForm);
+export default connect(mapStateToProps,{setInvoiceDetails,setHeaderInvoices,clearInvoiceDetails,clearHeaderInvoice})(CheckoutPaypalForm);

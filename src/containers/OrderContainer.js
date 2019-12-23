@@ -3,6 +3,8 @@ import Order from "../components/checkout/Order";
 import { Router, Route, Link } from "react-router-dom";
 import Checkout from '../components/checkout/Checkout';
 import history from '../history';
+import PaypalPaymentSuccess from "../components/checkout/PaypalPaymentSuccess";
+import PaymentSuccess from "../components/checkout/PaymentSuccess";
 class OrderContainer extends React.Component{
     renderOrders=()=>{
         const {orders}=this.props.orders;
@@ -94,19 +96,13 @@ class OrderContainer extends React.Component{
                         </React.Fragment>}
                     />
                     <Route exact 
-                    path="/payment-successfully" 
-                    render={()=><React.Fragment>
-                            <h1>Payment Successfully</h1>
-                            <p>Thanks by your purchase</p>
-                    </React.Fragment>} 
-                    />
+                    path="/payment-successfully">
+                        <PaymentSuccess/>
+                    </Route>
                     <Route exact 
-                    path="/paypal/success" 
-                    render={()=><React.Fragment>
-                            <h1>Payment Successfully</h1>
-                            <p>Thanks by your purchase</p>
-                    </React.Fragment>} 
-                    />
+                    path="/paypal/payment/success">
+                        <PaypalPaymentSuccess/>
+                    </Route>
                 </Router>
             </React.Fragment>
         )

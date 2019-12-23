@@ -7,6 +7,7 @@ import IconMasterCard from './IconMasterCard';
 import IconVisa from './IconVisa';
 import CheckoutPaypalForm from './CheckoutPaypalForm';
 import {addPaypalItemsToCart,clearPaypalItems} from '../../actions/paypalActions';
+
 class Checkout extends React.Component{
     componentDidMount(){
         this.props.clearPaypalItems();
@@ -15,11 +16,13 @@ class Checkout extends React.Component{
         for (let m = 0; m < orders.length; m++) {
             var tempItem={};
             tempSubtotal+=parseFloat(orders[m].quantity*orders[m].price);
+            tempItem.sku="100";
             tempItem.name=orders[m].name;
             tempItem.description=orders[m].description;
             tempItem.price=orders[m].price;
             tempItem.currency=orders[m].currency;
             tempItem.quantity=orders[m].quantity;
+            tempItem.tax="0.15";
             this.props.addPaypalItemsToCart(tempItem);
         }
     }
