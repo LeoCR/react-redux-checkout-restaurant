@@ -1,46 +1,52 @@
 import React from "react";
 import {connect} from 'react-redux';
 import api from "../../apis/api";
+import {getParameterByName} from "../../utils/utils";
 import {getOrders,deleteOrders} from '../../actions/cartActions';
 class PaypalPaymentSuccess extends React.Component{
     componentDidMount=async()=>{
-        console.log('Finished Payment Transaction');
-        /*history.push('/paypal/payment/success');
-        this.props.deleteOrders();
-        this.props.getOrders();*/
-        console.log('componentDidMount this.props');
-        console.log(this.props);
-        var headerInvoice=this.props.headerInvoices.headerInvoices[0];
-        var invoiceDetail=this.props.invoiceDetails.invoiceDetails[0];
-        for (let l = 0; l < headerInvoice.length; l++) {
-            const headInvc = headerInvoice[l];
-            if(headInvc.id_header>0){
-                console.log(headInvc);
-                await api.post('/api/add/header-invoice',{headerInvoice:headInvc})
-                .then(res=>{
-                    console.log('headerInvoice created ');
-                    console.log(res);
-                })
-                .catch(err=>{
-                    console.log('An error occurs on post(/api/add/header-invoice)');
-                    console.error(err);
-                })
+        var _this=this;
+        return new Promise((resolve, reject) => {
+            var paymentId = getParameterByName('paymentId');
+            var token=getParameterByName('token');
+            var PayerID=getParameterByName('PayerID');
+            var headerInvoice=this.props.headerInvoices.headerInvoices[0];
+            var invoiceDetail=this.props.invoiceDetails.invoiceDetails[0];
+            for (let l = 0; l < headerInvoice.length; l++) {
+                var headInvc = headerInvoice[l];
+                if(headInvc.id_header>0){
+                    api.post('/api/add/header-invoice',{headerInvoice:headInvc})
+                    .then(res=>{
+                        console.log('headerInvoice created ');
+                        console.log(res);
+                    })
+                    .catch(err=>{
+                        console.log('An error occurs on post(/api/add/header-invoice)');
+                        console.error(err);
+                    })
+                }
             }
-        }
-        for (let m = 0; m < invoiceDetail.length; m++) {
-            const invDtl = invoiceDetail[m];
-            if(invDtl.id_invoice_detail>0&& invDtl.header_invoice>0){
-                console.log(invDtl);
-                await api.post('/api/add/invoice',{invoiceDetail:invDtl})
-                .then(res=>{
-                    console.log('Invoice created '+res);
-                })
-                .catch(err=>{
-                    console.log('An error occurs on post(/api/add/invoice)');
-                    console.error(err);
-                })
+            for (let m = 0; m < invoiceDetail.length; m++) {
+                const invDtl = invoiceDetail[m];
+                var tempInvDtl=Object.assign(invDtl, {paypal_id:paymentId,paypal_payer_id:PayerID,paypal_token:token});
+                if(tempInvDtl.id_invoice_detail>0&& tempInvDtl.header_invoice>0){
+                    api.post('/api/add/invoice-paypal',{invoiceDetail:tempInvDtl})
+                    .then(res=>{
+                        console.log('Invoice created '+res);
+                    })
+                    .catch(err=>{
+                        console.log('An error occurs on post(/api/add/invoice)');
+                        console.error(err);
+                    })
+                }
+                
             }
-        }
+            setTimeout(() => {
+                _this.props.deleteOrders();
+                _this.props.getOrders();
+                resolve('resolved');
+            }, 3900);
+        });
     }
     render(){
         return(
