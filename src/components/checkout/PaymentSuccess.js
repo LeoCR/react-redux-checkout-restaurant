@@ -14,6 +14,7 @@ class PaymentSuccess extends React.Component{
             <React.Fragment>
                     <h1>Payment Successfully</h1>
                     <p>Thanks by your purchase</p>
+                    <a className="btn btn-danger" href='/user/history' target="_parent">View Invoices</a>
             </React.Fragment>
         )
     }

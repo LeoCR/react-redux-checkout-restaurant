@@ -31,8 +31,8 @@ class Order extends React.Component {
         return(
             <div className="order-item">
                 <div className="order-item-left-side">
-                    <h3>  {this.props.info.name}</h3>
-                    <h5>Quantity:  {this.props.info.quantity}</h5>    
+                    <h3 style={{fontSize:"29px"}}>  {this.props.info.name}</h3>
+                    <span className="badge badge-success text-dark">Quantity:  {this.props.info.quantity}</span>    
                     <p>Price per unit:<span className="badge badge-warning text-dark">${this.props.info.price}</span></p>
                     <img src={this.props.info.picture} alt={this.props.info.name} style={{maxWidth:"80px"}}/>
                 </div>

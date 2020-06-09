@@ -77,7 +77,9 @@ class CheckoutPaypalForm extends React.Component{
         });
     }
     clickedSubmitBtn=(e)=>{
-        e.currentTarget.classList.toggle('running');
+        if(this.state.isValid){
+            e.currentTarget.classList.toggle('running');
+        }
     }
     submitPaypalForm=async(e)=>{
         e.preventDefault();
