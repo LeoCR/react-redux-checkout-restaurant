@@ -5,10 +5,10 @@ export const addPaypalItemsToCart = (item) => {
         payload: item
     };
 };
-export const deletePaypalItemsFromCart=(name)=> {
+export const deletePaypalItemsFromCart=(sku)=> {
     return {
         type: DELETE_PAYPAL_ITEMS_FROM_CART,
-        payload: name
+        payload: sku
     }
 }
 export const clearPaypalItems=()=>{

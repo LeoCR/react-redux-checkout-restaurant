@@ -83,24 +83,21 @@ class CheckoutPaypalForm extends React.Component{
     }
     submitPaypalForm=async(e)=>{
         e.preventDefault();
-        return new Promise((resolve, reject) => {
-            var tempNextHeaderInvoice=this.state.nextHeaderInvoice;
+        return new Promise((resolve, reject) => { 
             var _this=this;
             var tempSubtotal=0;
-            
+            var itemTotal=0;
+            var taxTotal=0;
             for (let index = 0; index < this.props.orders.orders.length; index++) {
-                tempSubtotal+=this.props.orders.orders[index].quantity*this.props.orders.orders[index].price;
+                tempSubtotal+=parseFloat(this.props.orders.orders[index].quantity*this.props.orders.orders[index].price).toFixed(2);
+                taxTotal+=parseFloat(this.props.orders.orders[index].quantity*2);
+                itemTotal+=parseFloat((this.props.orders.orders[index].quantity*this.props.orders.orders[index].price)-(this.props.orders.orders[index].quantity*2))
             }
             this.setState({
                 subtotal:tempSubtotal
             });
             
-            if(this.state.isValid){
-                var shipping="0";
-                var tax="0.15";
-                var tempTotal=parseFloat(this.state.subtotal)+parseFloat(tax)+parseFloat(shipping);
-                cookies.set('restaurant_total', tempTotal);
-                
+            if(this.state.isValid){ 
                 var date=new Date();
                 var todayIs='';
                 var currentMonth;
@@ -115,6 +112,7 @@ class CheckoutPaypalForm extends React.Component{
                 todayIs=date.getFullYear()+'-'+currentMonth+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
                 if(this.props.orders){
                     var i=0;
+                    var tempNextHeaderInvoice=this.state.nextHeaderInvoice;
                     var tempNextIdInvoiceDetail=this.state.nextIdInvoiceDetail;
                     var tempNextIdHeader=this.state.nextIdHeader;
                     do{
@@ -148,34 +146,26 @@ class CheckoutPaypalForm extends React.Component{
                     while(i<=this.props.orders.orders.length);
                     this.props.setInvoiceDetails(invoiceDetails);
                     this.props.setHeaderInvoices(headerInvoices);
-                    
-                    setTimeout(() => {
-                        api.post('/api/pay-with-paypal', {
-                            total:parseFloat(tempTotal).toFixed(2),
-                            items: _this.props.paypalItems.paypalItems,
-                            subtotal: parseFloat(_this.state.subtotal).toFixed(2),
-                            shipping:shipping,
-                            tax:tax
-                        })
-                        .then(function (response) {
-                            console.log('Paypal Success response');
-                            console.log(response);
-                            window.location.href =response.data;
-                            resolve('resolved');
-                        })
+                    var tempJSON={
+                        items: _this.props.paypalItems.paypalItems,
+                        subtotal: parseFloat(_this.state.subtotal).toFixed(2),
+                        item_total:itemTotal.toFixed(2),
+                        tax_total:taxTotal
+                    }; 
+                        api.post('/api/pay-with-paypal',tempJSON)
+                        .then((res)=>{ 
+                                setTimeout(() => {
+                                    resolve('resolved');
+                                }, 2300);
+                                cookies.set('paypal_id',res.data.id);
+                                window.location.href =res.data.data.href;
+                                console.log(res); 
+                        }) 
                         .catch(function (error) {
                             console.log('An error occurs on post submitPaypalForm()');
                             console.log(error);
                             reject(error)
-                        });
-                    }, 1000);
-                    var tempJSON={
-                        total:parseFloat(tempTotal).toFixed(2),
-                        items: _this.props.paypalItems.paypalItems,
-                        subtotal: parseFloat(_this.state.subtotal).toFixed(2),
-                        shipping:shipping,
-                        tax:tax
-                    };
+                        }); 
                     console.log(tempJSON);
                     
                 }

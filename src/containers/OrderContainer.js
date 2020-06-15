@@ -55,7 +55,7 @@ class OrderContainer extends React.Component{
         return(
             <React.Fragment>
                 <h1 style={{float:'left'}}>Total:</h1> 
-                <h3 style={{float:'left',marginTop:'12px'}}>{totalPrice}$</h3>
+                <h3 style={{float:'left',marginTop:'12px'}}>{totalPrice.toFixed(2)}$</h3>
             </React.Fragment>
         )
     }

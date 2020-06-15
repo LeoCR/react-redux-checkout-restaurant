@@ -11,18 +11,19 @@ import {addPaypalItemsToCart,clearPaypalItems} from '../../actions/paypalActions
 class Checkout extends React.Component{
     componentDidMount(){
         this.props.clearPaypalItems();
-        const {orders}=this.props.orders;
-        var tempSubtotal=0;
+        const {orders}=this.props.orders; 
         for (let m = 0; m < orders.length; m++) {
             var tempItem={};
-            tempSubtotal+=parseFloat(orders[m].quantity*orders[m].price);
-            tempItem.sku="100";
             tempItem.name=orders[m].name;
-            tempItem.description=orders[m].description;
-            tempItem.price=orders[m].price;
-            tempItem.currency=orders[m].currency;
+            tempItem.description=orders[m].description.substring(0, 12);
+            tempItem.sku=orders[m].id;
+            tempItem.unit_amount={};
+            tempItem.unit_amount.currency_code="USD";
+            tempItem.unit_amount.value=parseFloat(orders[m].price-2).toFixed(2);
+            tempItem.tax={};
+            tempItem.tax.currency_code="USD";
+            tempItem.tax.value="2.00"; 
             tempItem.quantity=orders[m].quantity;
-            tempItem.tax="0.15";
             this.props.addPaypalItemsToCart(tempItem);
         }
     }
