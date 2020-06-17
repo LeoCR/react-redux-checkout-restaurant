@@ -159,6 +159,7 @@ class CheckoutForm extends React.Component{
             var todayIs='';
             var total=0;
             var currentMonth;
+            document.querySelector('#checkout_payment_form .btn-danger').classList.toggle('running');
             if(date.getMonth()<10){
                 currentMonth='0'+date.getMonth();
             }
@@ -283,7 +284,7 @@ class CheckoutForm extends React.Component{
     }
     render(){
         return(
-            <form onSubmit={(event)=>this.onSubmitCheckoutForm(event)}>
+            <form onSubmit={(event)=>this.onSubmitCheckoutForm(event)} id="checkout_payment_form">
                 <div className="form-group">
                     <input type="text" name="card-number" id="card-number" placeholder="Card Number" onChange={(event)=>this.onChangeNumberCard(event)}/>
                 </div>
@@ -339,7 +340,10 @@ class CheckoutForm extends React.Component{
                         {this.state.errorPostalCode}
                 </p>
                 <div style={{width:'100%',position:'relative',float:'left'}}>
-                    <button type="submit" className="btn btn-danger">Make Payment</button>
+                    <button type="submit" className="btn btn-danger  ld-ext-right">
+                        Make Payment
+                        <div className="ld ld-ring ld-spin"></div>
+                    </button>
                 </div>
             </form>
         )
