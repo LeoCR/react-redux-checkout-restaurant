@@ -4,7 +4,7 @@ import api from '../../apis/api';
 import {connect} from 'react-redux';
 import history from '../../history';
 import {getOrders,deleteOrders} from '../../actions/cartActions';
-class CheckoutForm extends React.Component{
+class CheckoutForm extends React.PureComponent{
     constructor (props) {
         super(props);
         this.state = {

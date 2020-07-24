@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 import {setInvoiceDetails,clearInvoiceDetails} from '../../actions/invoiceDetailActions';
 import {setHeaderInvoices,clearHeaderInvoice} from '../../actions/headerInvoiceActions';
 const cookies = new Cookies();
-class CheckoutPaypalForm extends React.Component{
+class CheckoutPaypalForm extends React.PureComponent{
     constructor (props) {
         super(props);
         this.state = {

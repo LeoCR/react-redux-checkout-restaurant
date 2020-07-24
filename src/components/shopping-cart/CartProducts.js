@@ -19,9 +19,7 @@ const CartProducts =props=>{
       e.preventDefault();
     }
     props.checkout();
-  }
-  const updateQuantity=()=>{ 
-  }
+  } 
   const decrementOrder=(order)=>{
     if(order.quantity>1){
         order.quantity=order.quantity-1;
