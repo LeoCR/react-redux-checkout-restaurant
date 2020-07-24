@@ -8,7 +8,7 @@ import IconVisa from './IconVisa';
 import CheckoutPaypalForm from './CheckoutPaypalForm';
 import {addPaypalItemsToCart,clearPaypalItems} from '../../actions/paypalActions';
 
-class Checkout extends React.Component{
+class Checkout extends React.PureComponent{
     componentDidMount(){
         this.props.clearPaypalItems();
         const {orders}=this.props.orders; 

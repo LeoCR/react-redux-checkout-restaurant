@@ -1,13 +1,14 @@
-import {createStore,applyMiddleware,compose} from 'redux';
+import {createStore,applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 const middleware = [thunk];
 const storageState = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders')) : [];
-
-const store = createStore(rootReducer, storageState, composeEnhancers(
-    applyMiddleware(...middleware)
-));
+const store = createStore(rootReducer,storageState, composeWithDevTools(
+    applyMiddleware(...middleware),
+    // other store enhancers if any
+)); 
 
 store.subscribe( () => {
     localStorage.setItem('orders', JSON.stringify(store.getState()))

@@ -7,8 +7,7 @@ import {getOrders,deleteOrders} from '../../actions/cartActions';
 import {clearInvoiceDetails} from '../../actions/invoiceDetailActions';
 import {clearHeaderInvoice} from '../../actions/headerInvoiceActions';
 const cookies = new Cookies();
-class PaypalPaymentSuccess extends React.Component{
-    
+class PaypalPaymentSuccess extends React.PureComponent{
     constructor (props) {
         super(props);
         this.state = {

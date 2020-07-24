@@ -1,35 +1,43 @@
-import React from "react";
+import React,{useEffect} from "react";
 import $ from 'jquery';
 import {connect} from 'react-redux';
 import {updateItemUnits,deleteFromCart} from '../../actions/cartActions';
-class CartProducts extends React.Component{
-  deleteOrder=(order,e)=>{
+
+const CartProducts =props=>{
+  useEffect(()=>{
+    props.calculateOrders();
+  },[props])
+  const deleteOrder=(order,e)=>{
+      if(e){
+        e.preventDefault();
+      }
+      props.deleteFromCart(order.id);
+      props.calculateOrders();
+  }
+  const checkout=(e)=>{
+    if(e){
       e.preventDefault();
-      this.props.deleteFromCart(order.id);
-      this.props.calculateOrders();
+    }
+    props.checkout();
   }
-  checkout=(e)=>{
-    e.preventDefault();
-    this.props.checkout();
+  const updateQuantity=()=>{ 
   }
-  updateQuantity=()=>{ 
-  }
-  decrementOrder=(order)=>{
+  const decrementOrder=(order)=>{
     if(order.quantity>1){
         order.quantity=order.quantity-1;
         $('#quantity-added').val(order.quantity);
     }
-    this.props.updateItemUnits(order);
-    this.props.calculateOrders();
+    props.updateItemUnits(order);
+    props.calculateOrders();
   }
-  incrementOrder=(order)=>{
+  const incrementOrder=(order)=>{
     order.quantity=order.quantity+1;
     $('#quantity-added').val(order.quantity);
-    this.props.updateItemUnits(order);
-    this.props.calculateOrders();
+    props.updateItemUnits(order);
+    props.calculateOrders();
   }
-  calculateTotal=()=>{
-    var orders=this.props.orders.orders,
+  const calculateTotal=()=>{
+    var orders=props.orders.orders,
     totalPrice=0;
     orders.forEach(function(element) {
         totalPrice+=element.price*element.quantity;
@@ -41,54 +49,53 @@ class CartProducts extends React.Component{
             <h5>{totalPrice}$</h5>
         </React.Fragment>
     )
-  }
-    render(){
-      var orders=this.props.orders.orders;
-      this.props.calculateOrders();
-      if(orders.length===0){
-            return(
-                <div className="modal-body">
-                    Your cart is Empty
-                    <button className="btn btn-success" onClick={(e)=>{
-                      window.location.replace("/#menu")
-                    }}>Go to Cart</button>
-                </div>
-            )
-      } 
-      return(
-            <div id="show-orders" className="modal-body">
-                <ul style={{padding:'5px 15px',listStyle:'none'}}>
-                {orders.map(order => 
-                    <li key={order.id} 
-                        style={{listStyle:'none',width:'100%',
-                        position:'relative',float:'left'}}>
-                        <h5 style={{maxWidth:'350px',float:'left',
-                        width:'100%'}}>{order.name}</h5>
-                        <button style={{width:'50px' ,float:'left'}} 
-                            type="button" className="btn btn-danger" 
-                            data-dismiss="modal" aria-label="Close" 
-                            onClick={(e)=>this.deleteOrder(order,e)}>
-                                <span aria-hidden="true">&times;</span>
-                        </button>
-                        <p style={{width:'225px'}}>
-                            <p style={{width:' 75px',float:'left'}}>Quantity:</p>
-                            <p style={{width:'80px',height:'30px',float:'left', border:'1px solid black',padding:'0'}}  id="quantity-added">{order.quantity} </p>
-                            <button type="button" className="btn btn-primary" onClick={()=>this.decrementOrder(order)} style={{float: 'right'}}>-</button>
-                            <button type="button" className="btn btn-success" onClick={()=>this.incrementOrder(order)} style={{float: 'right'}}>+</button>
-                        </p>
-                    </li>
-                )}
-                </ul>
-                {this.calculateTotal()}
-                <button className="btn btn-primary" onClick={(e)=>this.checkout(e)}>Checkout</button>
+  } 
+  var orders=props.orders.orders;
+  
+  if(orders.length===0){
+        return(
+            <div className="modal-body">
+                Your cart is Empty
+                <button className="btn btn-success" onClick={(e)=>{
+                  window.location.replace("/#menu")
+                }}>Go to Cart</button>
             </div>
-      )
-  }
+        )
+  } 
+  return(
+        <div id="show-orders" className="modal-body">
+            <ul style={{padding:'5px 15px',listStyle:'none'}}>
+            {orders.map(order => 
+                <li key={order.id} 
+                    style={{listStyle:'none',width:'100%',
+                    position:'relative',float:'left'}}>
+                    <h5 style={{maxWidth:'350px',float:'left',
+                    width:'100%'}}>{order.name}</h5>
+                    <button style={{width:'50px' ,float:'left'}} 
+                        type="button" className="btn btn-danger" 
+                        data-dismiss="modal" aria-label="Close" 
+                        onClick={(e)=>deleteOrder(order,e)}>
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p style={{width:'225px'}}>
+                        <p style={{width:' 75px',float:'left'}}>Quantity:</p>
+                        <p style={{width:'80px',height:'30px',float:'left', border:'1px solid black',padding:'0'}}  id="quantity-added">{order.quantity} </p>
+                        <button type="button" className="btn btn-primary" onClick={()=>decrementOrder(order)} style={{float: 'right'}}>-</button>
+                        <button type="button" className="btn btn-success" onClick={()=>incrementOrder(order)} style={{float: 'right'}}>+</button>
+                    </p>
+                </li>
+            )}
+            </ul>
+            {calculateTotal()}
+            <button className="btn btn-primary" onClick={(e)=>checkout(e)}>Checkout</button>
+        </div>
+  )
 }
+
 const mapStateToProps=(state)=>{
     return{
       products:state.products,
       orders:state.orders
     }
 }
-export default connect(mapStateToProps,{updateItemUnits,deleteFromCart})(CartProducts)
+export default connect(mapStateToProps,{updateItemUnits,deleteFromCart})(React.memo(CartProducts))
